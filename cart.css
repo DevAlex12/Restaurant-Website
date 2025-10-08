@@ -1,0 +1,137 @@
+.cart-items {
+  max-width: 700px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease;
+}
+
+.cart-item:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.cart-item h3 {
+  font-size: 18px;
+  color: #b22222;
+  margin-bottom: 5px;
+}
+
+.cart-item p {
+  font-size: 16px;
+  color: #333;
+  margin: 2px 0;
+}
+
+.cart-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price {
+  font-weight: 600;
+}
+
+.qtybtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.qtybtn button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #b22222;
+  color: #fff;
+  transition: background 0.3s ease;
+}
+
+.qtybtn button:hover {
+  background: #8b1a1a;
+}
+
+.quantity {
+  font-weight: 600;
+  width: 24px;
+  text-align: center;
+}
+
+.addedmsg {
+  font-size: 14px;
+  color: green;
+  margin-top: 5px;
+}
+
+.total-section {
+  max-width: 700px;
+  margin: 10px auto 20px;
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 20px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.clearCart,
+.order {
+  display: block;
+  width: 220px;
+  margin: 10px auto;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clearCart {
+  background: #aaa;
+  color: #fff;
+}
+
+.clearCart:hover {
+  background: #888;
+}
+
+.order {
+  background: #b22222;
+  color: #fff;
+}
+
+.order:hover {
+  background: #8b1a1a;
+}
+
+@media (max-width: 600px) {
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .total-section,
+  .clearCart,
+  .order {
+    width: 100%;
+  }
+}
