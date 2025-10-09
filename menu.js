@@ -42,7 +42,12 @@ const menuData = [
     title: "Ewedu Soup",
     price: 600,
   },
-  { id: 33, foodimage: "images/Semo.jpg", title: "Ila Alasepo", price: 500 },
+  {
+    id: 33,
+    foodimage: "images/ilaalasepo.jpg",
+    title: "Ila Alasepo",
+    price: 500,
+  },
   {
     id: 41,
     foodimage: "images/Goat meat.jpg",
