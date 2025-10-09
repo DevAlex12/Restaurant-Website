@@ -28,7 +28,7 @@ const menuData = [
   { id: 31, foodimage: "images/ogbono.jpg", title: "Ogbono Soup", price: 500 },
   {
     id: 32,
-    foodimage: "images/Ewedu Soup.jpg",
+    foodimage: "images/EweduSoup.jpg",
     title: "Ewedu Soup",
     price: 600,
   },
