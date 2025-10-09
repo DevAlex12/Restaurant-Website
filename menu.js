@@ -26,14 +26,24 @@ const menuData = [
   { id: 13, foodimage: "images/eba.jpg", title: "Eba", price: 1000 },
   { id: 23, foodimage: "images/Semo.jpg", title: "Bashmati Rice", price: 1500 },
   { id: 31, foodimage: "images/ogbono.jpg", title: "Ogbono Soup", price: 500 },
-  { id: 32, foodimage: "images/Semo.jpg", title: "Ewedu Soup", price: 600 },
+  {
+    id: 32,
+    foodimage: "images/Ewedu Soup.jpg",
+    title: "Ewedu Soup",
+    price: 600,
+  },
   { id: 33, foodimage: "images/Semo.jpg", title: "Ila Alasepo", price: 500 },
-  { id: 41, foodimage: "images/Semo.jpg", title: "Goat Meat", price: 1000 },
-  { id: 42, foodimage: "images/Semo.jpg", title: "Cow Meat", price: 1000 },
-  { id: 43, foodimage: "images/Semo.jpg", title: "Fish", price: 300 },
-  { id: 50, foodimage: "images/Semo.jpg", title: "Beans", price: 300 },
-  { id: 51, foodimage: "images/semo.jpg", title: "Akara", price: 100 },
-  { id: 52, foodimage: "images/semo.jpg", title: "moimoi", price: "500" },
+  {
+    id: 41,
+    foodimage: "images/Goat meat.jpg",
+    title: "Goat Meat",
+    price: 1000,
+  },
+  { id: 42, foodimage: "images/cow meat.jpg", title: "Cow Meat", price: 1000 },
+  { id: 43, foodimage: "images/fish.jpg", title: "Fish", price: 300 },
+  { id: 50, foodimage: "images/beans.jpg", title: "Beans", price: 300 },
+  { id: 51, foodimage: "images/Akara.jpg", title: "Akara", price: 100 },
+  { id: 52, foodimage: "images/moimois.jpg", title: "moimoi", price: "500" },
 ];
 
 // Render items
