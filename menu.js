@@ -20,11 +20,21 @@ const menuData = [
     title: "Jollof Rice",
     price: 1800,
   },
-  { id: 24, foodimage: "images/semo.jpg", title: "White Rice", price: 1000 },
+  {
+    id: 24,
+    foodimage: "images/white rice.jpg",
+    title: "White Rice",
+    price: 1000,
+  },
   { id: 11, foodimage: "images/Amala.jpg", title: "Amala", price: 1800 },
   { id: 12, foodimage: "images/Semo.jpg", title: "Semo", price: 1800 },
   { id: 13, foodimage: "images/eba.jpg", title: "Eba", price: 1000 },
-  { id: 23, foodimage: "images/Semo.jpg", title: "Bashmati Rice", price: 1500 },
+  {
+    id: 23,
+    foodimage: "images/bashmati rice.jpg",
+    title: "Bashmati Rice",
+    price: 1500,
+  },
   { id: 31, foodimage: "images/ogbono.jpg", title: "Ogbono Soup", price: 500 },
   {
     id: 32,
