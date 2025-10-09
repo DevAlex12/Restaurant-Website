@@ -22,7 +22,7 @@ const menuData = [
   },
   {
     id: 24,
-    foodimage: "images/white rice.jpg",
+    foodimage: "images/whiterice.jpg",
     title: "White Rice",
     price: 1000,
   },
