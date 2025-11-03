@@ -1,6 +1,28 @@
 const card = document.querySelector(".foods");
 const cartBtn = document.querySelector(".cart-icon");
+const filterBar = document.querySelector(".filter-bar");
 
+const categories = [
+  { key: "all", label: "All" },
+  { key: "swallow", label: "Swallow Meals" },
+  { key: "soup", label: "Soup" },
+  { key: "rice", label: "Rice" },
+  { key: "meat", label: "Meat" },
+  { key: "beans", label: "Beans" },
+  { key: "snacks", label: "Snacks" },
+];
+
+// Generate filter buttons
+filterBar.innerHTML = categories
+  .map(
+    (cat, i) =>
+      `<button data-category="${cat.key}" class="${i === 0 ? "active" : ""}">
+        ${cat.label}
+      </button>`
+  )
+  .join("");
+
+// ===== MENU DATA =====
 const menuData = [
   {
     id: 10,
@@ -58,10 +80,23 @@ const menuData = [
   { id: 43, foodimage: "images/fish.jpg", title: "Fish", price: 300 },
   { id: 50, foodimage: "images/beans.jpg", title: "Beans", price: 300 },
   { id: 51, foodimage: "images/Akara.jpg", title: "Akara", price: 100 },
-  { id: 52, foodimage: "images/moimois.jpg", title: "moimoi", price: "500" },
+  { id: 52, foodimage: "images/moimois.jpg", title: "Moimoi", price: 500 },
+  {
+    id: 45,
+    foodimage: "images/Chicken.jpg",
+    title: "Chicken Meat",
+    price: 500,
+  },
+  {
+    id: 60,
+    foodimage: "images/ariamKulikuli.jpg",
+    title: "Ariam Kulikuli",
+    price: 5000,
+  },
+  { id: 61, foodimage: "images/cookies.jpg", title: "Cookies", price: 1200 },
 ];
 
-// Render items
+// ===== RENDER MENU =====
 function renderMenu(data) {
   card.innerHTML = data
     .map(
@@ -84,11 +119,10 @@ function renderMenu(data) {
     `
     )
     .join("");
-
   attachEvents();
 }
 
-// Handle plus/minus/add
+// ===== PLUS/MINUS/ADD LOGIC =====
 function attachEvents() {
   document.querySelectorAll(".afood").forEach((food) => {
     const qtyDiv = food.querySelector(".quantity");
@@ -142,7 +176,7 @@ function attachEvents() {
   });
 }
 
-// Filter by category
+// ===== FILTER FUNCTION =====
 function filterByCategory(category) {
   let filtered;
   switch (category) {
@@ -161,13 +195,16 @@ function filterByCategory(category) {
     case "beans":
       filtered = menuData.filter((item) => String(item.id).startsWith("5"));
       break;
+    case "snacks":
+      filtered = menuData.filter((item) => String(item.id).startsWith("6"));
+      break;
     default:
       filtered = menuData;
   }
   renderMenu(filtered);
 }
 
-// Filter button logic
+// ===== FILTER BUTTON LOGIC =====
 document.querySelectorAll(".filter-bar button").forEach((btn) => {
   btn.addEventListener("click", () => {
     document
@@ -179,7 +216,7 @@ document.querySelectorAll(".filter-bar button").forEach((btn) => {
   });
 });
 
-// Cart button logic
+// ===== CART BUTTON =====
 if (cartBtn) {
   cartBtn.addEventListener("click", (e) => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -187,10 +224,10 @@ if (cartBtn) {
       e.preventDefault();
       alert("Add a food to cart first!");
     } else {
-      window.location.href = "cart.html"; // change to your cart page
+      window.location.href = "cart.html";
     }
   });
 }
 
-// Default load
+// ===== INITIAL LOAD =====
 renderMenu(menuData);

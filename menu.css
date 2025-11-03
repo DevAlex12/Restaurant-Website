@@ -24,7 +24,7 @@ nav {
 }
 
 nav h2:first-child {
-  color: #b22222;
+  color: #22b235;
   font-size: 15px;
 }
 
@@ -35,7 +35,7 @@ nav h2:last-child {
 
 .cart-icon {
   font-size: 26px;
-  color: #b22222;
+  color: #22b238;
   text-decoration: none;
   transition: transform 0.2s ease;
 }
@@ -61,7 +61,7 @@ nav h2:last-child {
 }
 
 .filter-bar button {
-  background: #b22222;
+  background: #22b23c;
   color: #fff;
   border: none;
   border-radius: 20px;
@@ -73,7 +73,7 @@ nav h2:last-child {
 }
 
 .filter-bar button:hover {
-  background: #8b1a1a;
+  background: #1a8b38;
   transform: scale(1.05);
 }
 
@@ -152,24 +152,24 @@ button {
 
 .plus,
 .minus {
-  background: #b22222;
+  background: #22b224;
   color: #fff;
 }
 
 .plus:hover,
 .minus:hover {
-  background: #8b1a1a;
+  background: #1a8b32;
 }
 
 .crtbtn {
-  background: #b22222;
+  background: #22b235;
   color: #fff;
   width: 100%;
   margin-top: 8px;
 }
 
 .crtbtn:hover {
-  background: #8b1a1a;
+  background: #119c16;
 }
 
 .addedmsg {

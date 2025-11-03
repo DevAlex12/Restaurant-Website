@@ -38,7 +38,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     message += `Total: ₦${total}`;
-    const phoneNumber = "2347060577255";
+    const phoneNumber = "+2349138699736";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
