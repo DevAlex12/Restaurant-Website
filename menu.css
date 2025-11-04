@@ -44,6 +44,34 @@ nav h2:last-child {
   transform: scale(1.1);
 }
 
+/* ===== SEARCH BAR ===== */
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  padding: 15px 20px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-container input {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 15px;
+  font-size: 15px;
+  border: 2px solid #22b235;
+  border-radius: 25px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+  border-color: #1a8b38;
+  box-shadow: 0 0 0 3px rgba(34, 178, 53, 0.15);
+}
+
 /* ===== FILTER BAR ===== */
 .filter-bar {
   display: flex;
@@ -184,6 +212,16 @@ button {
 @media (max-width: 600px) {
   nav {
     padding: 10px 20px;
+  }
+
+  .search-container {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .search-container input {
+    font-size: 14px;
+    padding: 8px 12px;
   }
 
   .filter-bar {

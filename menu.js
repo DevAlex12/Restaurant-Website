@@ -1,18 +1,24 @@
+// ===== SELECTORS =====
 const card = document.querySelector(".foods");
 const cartBtn = document.querySelector(".cart-icon");
 const filterBar = document.querySelector(".filter-bar");
+const searchContainer = document.querySelector(".search-container");
 
+// ===== CATEGORIES =====
 const categories = [
   { key: "all", label: "All" },
   { key: "swallow", label: "Swallow Meals" },
   { key: "soup", label: "Soup" },
   { key: "rice", label: "Rice" },
+  { key: "spaghetti", label: "Spaghetti" }, // 🆕 Added
   { key: "meat", label: "Meat" },
   { key: "beans", label: "Beans" },
   { key: "snacks", label: "Snacks" },
+  { key: "fries", label: "Fries" },
+  { key: "drinks", label: "Drinks" },
 ];
 
-// Generate filter buttons
+// ===== GENERATE FILTER BUTTONS =====
 filterBar.innerHTML = categories
   .map(
     (cat, i) =>
@@ -22,14 +28,27 @@ filterBar.innerHTML = categories
   )
   .join("");
 
+// ===== ADD SEARCH BAR =====
+if (searchContainer) {
+  searchContainer.innerHTML = `
+    <input type="text" id="searchInput" placeholder="Search for food or drink..." />
+  `;
+}
+
 // ===== MENU DATA =====
 const menuData = [
+  // Swallow
   {
     id: 10,
     foodimage: "images/PoundedYam.jpg",
     title: "Pounded Yam",
     price: 2000,
   },
+  { id: 11, foodimage: "images/Amala.jpg", title: "Amala", price: 1800 },
+  { id: 12, foodimage: "images/Semo.jpg", title: "Semo", price: 1800 },
+  { id: 13, foodimage: "images/eba.jpg", title: "Eba", price: 1000 },
+
+  // Rice
   {
     id: 20,
     foodimage: "images/FriedRice.jpg",
@@ -43,20 +62,19 @@ const menuData = [
     price: 1800,
   },
   {
-    id: 24,
-    foodimage: "images/whiterice.jpg",
-    title: "White Rice",
-    price: 1000,
-  },
-  { id: 11, foodimage: "images/Amala.jpg", title: "Amala", price: 1800 },
-  { id: 12, foodimage: "images/Semo.jpg", title: "Semo", price: 1800 },
-  { id: 13, foodimage: "images/eba.jpg", title: "Eba", price: 1000 },
-  {
     id: 23,
     foodimage: "images/bashmati rice.jpg",
     title: "Bashmati Rice",
     price: 1500,
   },
+  {
+    id: 24,
+    foodimage: "images/whiterice.jpg",
+    title: "White Rice",
+    price: 1000,
+  },
+
+  // Soup
   { id: 31, foodimage: "images/ogbono.jpg", title: "Ogbono Soup", price: 500 },
   {
     id: 32,
@@ -71,6 +89,46 @@ const menuData = [
     price: 500,
   },
   {
+    id: 34,
+    foodimage: "images/Stew.jpg",
+    title: " Buka stew. 2.5 litres of Stew with Turkey,beef and ponmo",
+    price: 25000,
+  },
+  {
+    id: 35,
+    foodimage: "images/Stew1.jpg",
+    title: " Stew",
+    price: 10000,
+  },
+  {
+    id: 36,
+    foodimage: "images/ESoup.jpg",
+    title: " Efo Riro",
+    price: 25000,
+  },
+
+  // 🆕 Spaghetti
+  {
+    id: 90,
+    foodimage: "images/SpagChi.jpg",
+    title: "Stir Fry Spaghetti with Chicken",
+    price: 4500,
+  },
+  {
+    id: 91,
+    foodimage: "images/SpagTur.jpg",
+    title: "Stir fry spaghetti with Turkey",
+    price: 6400,
+  },
+  {
+    id: 92,
+    foodimage: "images/Spag2.jpg",
+    title: "Stir fry spaghetti with chicken cheaper chow budget",
+    price: 3500,
+  },
+
+  // Meat
+  {
     id: 41,
     foodimage: "images/Goat meat.jpg",
     title: "Goat Meat",
@@ -78,15 +136,19 @@ const menuData = [
   },
   { id: 42, foodimage: "images/cow meat.jpg", title: "Cow Meat", price: 1000 },
   { id: 43, foodimage: "images/fish.jpg", title: "Fish", price: 300 },
-  { id: 50, foodimage: "images/beans.jpg", title: "Beans", price: 300 },
-  { id: 51, foodimage: "images/Akara.jpg", title: "Akara", price: 100 },
-  { id: 52, foodimage: "images/moimois.jpg", title: "Moimoi", price: 500 },
   {
     id: 45,
     foodimage: "images/Chicken.jpg",
     title: "Chicken Meat",
     price: 500,
   },
+
+  // Beans
+  { id: 50, foodimage: "images/beans.jpg", title: "Beans", price: 300 },
+  { id: 51, foodimage: "images/Akara.jpg", title: "Akara", price: 100 },
+  { id: 52, foodimage: "images/moimois.jpg", title: "Moimoi", price: 500 },
+
+  // Snacks
   {
     id: 60,
     foodimage: "images/ariamKulikuli.jpg",
@@ -94,6 +156,60 @@ const menuData = [
     price: 5000,
   },
   { id: 61, foodimage: "images/cookies.jpg", title: "Cookies", price: 1200 },
+
+  // Fries
+  {
+    id: 80,
+    foodimage: "images/TurNdPota.jpg",
+    title: "Turkey & Sweet Potato Chips",
+    price: 6600,
+  },
+  {
+    id: 81,
+    foodimage: "images/ChikenFries.jpg",
+    title: "Chicken & Sweet Potato",
+    price: 4600,
+  },
+
+  // Drinks
+  {
+    id: 70,
+    foodimage: "images/BigExotic.jpg",
+    title: "Big Chilled Exotic",
+    price: 2200,
+  },
+  {
+    id: 71,
+    foodimage: "images/HollaYo.jpg",
+    title: "Hollandia Yoghurt",
+    price: 2500,
+  },
+  {
+    id: 72,
+    foodimage: "images/CarDrink.jpg",
+    title: "Carbonated Drinks",
+    price: 500,
+  },
+  { id: 73, foodimage: "images/Water.jpg", title: "Bottled Water", price: 300 },
+  {
+    id: 74,
+    foodimage: "images/ChiActive.jpg",
+    title: "Chivita Active Fruit Juice",
+    price: 2500,
+  },
+  {
+    id: 75,
+    foodimage: "images/BigSoDrink.jpg",
+    title: "Big Sosa Drink",
+    price: 1200,
+  },
+  {
+    id: 76,
+    foodimage: "images/PulpyOrange.jpg",
+    title: "Pulpy Orange",
+    price: 1200,
+  },
+  { id: 77, foodimage: "images/Malt.jpg", title: "Maltina Drink", price: 1200 },
 ];
 
 // ===== RENDER MENU =====
@@ -198,6 +314,15 @@ function filterByCategory(category) {
     case "snacks":
       filtered = menuData.filter((item) => String(item.id).startsWith("6"));
       break;
+    case "drinks":
+      filtered = menuData.filter((item) => String(item.id).startsWith("7"));
+      break;
+    case "fries":
+      filtered = menuData.filter((item) => String(item.id).startsWith("8"));
+      break;
+    case "spaghetti": // 🆕
+      filtered = menuData.filter((item) => String(item.id).startsWith("9"));
+      break;
     default:
       filtered = menuData;
   }
@@ -213,8 +338,47 @@ document.querySelectorAll(".filter-bar button").forEach((btn) => {
     btn.classList.add("active");
     const category = btn.dataset.category;
     filterByCategory(category);
+    document.getElementById("searchInput").value = ""; // clear search
   });
 });
+
+// ===== SEARCH FUNCTION =====
+const searchInput = document.getElementById("searchInput");
+if (searchInput) {
+  searchInput.addEventListener("input", (e) => {
+    const term = e.target.value.toLowerCase().trim();
+    const currentCategory = document.querySelector(".filter-bar .active")
+      .dataset.category;
+
+    let filtered = menuData;
+
+    // apply category filter first
+    if (currentCategory !== "all") {
+      filtered = menuData.filter((item) =>
+        String(item.id).startsWith(
+          {
+            swallow: "1",
+            rice: "2",
+            soup: "3",
+            meat: "4",
+            beans: "5",
+            snacks: "6",
+            drinks: "7",
+            fries: "8",
+            spaghetti: "9", // 🆕
+          }[currentCategory]
+        )
+      );
+    }
+
+    // apply search filter
+    filtered = filtered.filter((item) =>
+      item.title.toLowerCase().includes(term)
+    );
+
+    renderMenu(filtered);
+  });
+}
 
 // ===== CART BUTTON =====
 if (cartBtn) {
