@@ -138,9 +138,21 @@ const menuData = [
   { id: 43, foodimage: "images/fish.jpg", title: "Fish", price: 300 },
   {
     id: 45,
-    foodimage: "images/Chicken.jpg",
-    title: "Chicken Meat",
-    price: 500,
+    foodimage: "images/ChickWing.jpg",
+    title: "Chicken Wings",
+    price: 3000,
+  },
+  {
+    id: 45,
+    foodimage: "images/ChickLap.jpg",
+    title: "Chicken Lap",
+    price: 3000,
+  },
+  {
+    id: 45,
+    foodimage: "images/TurDrumStick.jpg",
+    title: "Turkey DrumStick",
+    price: 4500,
   },
 
   // Beans
@@ -156,7 +168,18 @@ const menuData = [
     price: 5000,
   },
   { id: 61, foodimage: "images/cookies.jpg", title: "Cookies", price: 1200 },
-
+  {
+    id: 62,
+    foodimage: "images/Salad.jpg",
+    title: "Vegetable salad/ Coleslaw",
+    price: 700,
+  },
+  {
+    id: 62,
+    foodimage: "images/SmallChop.jpg",
+    title: "Small Chips Tray",
+    price: 10000,
+  },
   // Fries
   {
     id: 80,
