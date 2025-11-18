@@ -7,12 +7,11 @@ const searchContainer = document.querySelector(".search-container");
 // ===== CATEGORIES =====
 const categories = [
   { key: "all", label: "All" },
-  { key: "swallow", label: "Swallow Meals" },
+  { key: "combo", label: "Combo" },
   { key: "soup", label: "Soup" },
   { key: "rice", label: "Rice" },
   { key: "spaghetti", label: "Spaghetti" }, // 🆕 Added
   { key: "meat", label: "Meat" },
-  { key: "beans", label: "Beans" },
   { key: "snacks", label: "Snacks" },
   { key: "fries", label: "Fries" },
   { key: "drinks", label: "Drinks" },
@@ -37,56 +36,43 @@ if (searchContainer) {
 
 // ===== MENU DATA =====
 const menuData = [
-  // Swallow
+  //Combo
   {
     id: 10,
-    foodimage: "images/PoundedYam.jpg",
-    title: "Pounded Yam",
-    price: 2000,
+    foodimage: "images/JollofRiceWithChicken.jpg",
+    title: "Jollof Rice With Chicken",
+    price: "4500",
   },
-  { id: 11, foodimage: "images/Amala.jpg", title: "Amala", price: 1800 },
-  { id: 12, foodimage: "images/Semo.jpg", title: "Semo", price: 1800 },
-  { id: 13, foodimage: "images/eba.jpg", title: "Eba", price: 1000 },
-
+  {
+    id: 11,
+    foodimage: "images/JollndFriedAndEgg.jpg",
+    title: "Jollof and Fried Rice With Egg",
+    price: "2000",
+  },
+  {
+    id: 12,
+    foodimage: "images/JollofRiceandTFish.jpg",
+    title: "Jollof and Fried Rice With Fish",
+    price: "2000",
+  },
   // Rice
   {
     id: 20,
     foodimage: "images/FriedRice.jpg",
-    title: "Fried Rice",
-    price: 1500,
+    title: "A Scoop of Fried Rice",
+    price: 700,
   },
   {
     id: 21,
     foodimage: "images/JollofRice.jpg",
-    title: "Jollof Rice",
-    price: 1800,
-  },
-  {
-    id: 23,
-    foodimage: "images/bashmati rice.jpg",
-    title: "Bashmati Rice",
-    price: 1500,
+    title: "A Scoop of Jollof Rice",
+    price: 700,
   },
   {
     id: 24,
     foodimage: "images/whiterice.jpg",
-    title: "White Rice",
-    price: 1000,
-  },
-
-  // Soup
-  { id: 31, foodimage: "images/ogbono.jpg", title: "Ogbono Soup", price: 500 },
-  {
-    id: 32,
-    foodimage: "images/EweduSoup.jpg",
-    title: "Ewedu Soup",
-    price: 600,
-  },
-  {
-    id: 33,
-    foodimage: "images/ilaalasepo.jpg",
-    title: "Ila Alasepo",
-    price: 500,
+    title: "A Scoop White Rice",
+    price: 700,
   },
   {
     id: 34,
@@ -128,13 +114,7 @@ const menuData = [
   },
 
   // Meat
-  {
-    id: 41,
-    foodimage: "images/Goat meat.jpg",
-    title: "Goat Meat",
-    price: 1000,
-  },
-  { id: 42, foodimage: "images/cow meat.jpg", title: "Cow Meat", price: 1000 },
+  { id: 42, foodimage: "images/cow meat.jpg", title: "Beef", price: 1000 },
   { id: 43, foodimage: "images/fish.jpg", title: "Fish", price: 300 },
   {
     id: 45,
@@ -155,19 +135,8 @@ const menuData = [
     price: 4500,
   },
 
-  // Beans
-  { id: 50, foodimage: "images/beans.jpg", title: "Beans", price: 300 },
-  { id: 51, foodimage: "images/Akara.jpg", title: "Akara", price: 100 },
-  { id: 52, foodimage: "images/moimois.jpg", title: "Moimoi", price: 500 },
-
   // Snacks
-  {
-    id: 60,
-    foodimage: "images/ariamKulikuli.jpg",
-    title: "Ariam Kulikuli",
-    price: 5000,
-  },
-  { id: 61, foodimage: "images/cookies.jpg", title: "Cookies", price: 1200 },
+
   {
     id: 62,
     foodimage: "images/Salad.jpg",
@@ -190,7 +159,7 @@ const menuData = [
   {
     id: 81,
     foodimage: "images/ChikenFries.jpg",
-    title: "Chicken & Sweet Potato",
+    title: "Chicken & Sweet Potato Chips",
     price: 4600,
   },
 
@@ -319,7 +288,7 @@ function attachEvents() {
 function filterByCategory(category) {
   let filtered;
   switch (category) {
-    case "swallow":
+    case "combo":
       filtered = menuData.filter((item) => String(item.id).startsWith("1"));
       break;
     case "rice":
@@ -330,9 +299,6 @@ function filterByCategory(category) {
       break;
     case "meat":
       filtered = menuData.filter((item) => String(item.id).startsWith("4"));
-      break;
-    case "beans":
-      filtered = menuData.filter((item) => String(item.id).startsWith("5"));
       break;
     case "snacks":
       filtered = menuData.filter((item) => String(item.id).startsWith("6"));
