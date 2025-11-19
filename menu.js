@@ -63,7 +63,7 @@ const menuData = [
   {
     id: 12,
     foodimage: "images/JollofRiceandTFish.jpg",
-    title: "Jollof and Fried Rice With Fish",
+    title: "Jollof Rice With Fish",
     price: 3000,
   },
 
