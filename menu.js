@@ -1,23 +1,22 @@
-// ===== SELECTORS =====
+// ===================== SELECTORS =====================
 const card = document.querySelector(".foods");
 const cartBtn = document.querySelector(".cart-icon");
 const filterBar = document.querySelector(".filter-bar");
 const searchContainer = document.querySelector(".search-container");
 
-// ===== CATEGORIES =====
+// ===================== CATEGORIES =====================
 const categories = [
   { key: "all", label: "All" },
-  { key: "combo", label: "Combo" },
-  { key: "soup", label: "Soup" },
   { key: "rice", label: "Rice" },
-  { key: "spaghetti", label: "Spaghetti" }, // 🆕 Added
-  { key: "meat", label: "Meat" },
-  { key: "snacks", label: "Snacks" },
+  { key: "spaghetti", label: "Spaghetti" },
   { key: "fries", label: "Fries" },
+  { key: "protein", label: "Protein" },
+  { key: "soup", label: "Soup" },
   { key: "drinks", label: "Drinks" },
+  { key: "etc", label: "E.t.c" }, // LAST
 ];
 
-// ===== GENERATE FILTER BUTTONS =====
+// ===================== GENERATE FILTER BUTTONS =====================
 filterBar.innerHTML = categories
   .map(
     (cat, i) =>
@@ -27,34 +26,47 @@ filterBar.innerHTML = categories
   )
   .join("");
 
-// ===== ADD SEARCH BAR =====
+// ===================== ADD SEARCH BAR =====================
 if (searchContainer) {
   searchContainer.innerHTML = `
     <input type="text" id="searchInput" placeholder="Search for food or drink..." />
   `;
 }
 
-// ===== MENU DATA =====
+// ===================== MENU DATA =====================
 const menuData = [
-  //Combo
+  // Rice Combo (merged into Rice)
   {
     id: 10,
     foodimage: "images/JollofRiceWithChicken.jpg",
     title: "Jollof Rice With Chicken",
-    price: "4500",
+    price: 4500,
+  },
+  {
+    id: 10,
+    foodimage: "images/JRT.jpg",
+    title: "Jollof Rice With Turkey",
+    price: 4500,
+  },
+  {
+    id: 10,
+    foodimage: "images/JFT.jpg",
+    title: "Jollof and Fried Rice With Turkey",
+    price: 4500,
   },
   {
     id: 11,
     foodimage: "images/JollndFriedAndEgg.jpg",
     title: "Jollof and Fried Rice With Egg",
-    price: "2000",
+    price: 2000,
   },
   {
     id: 12,
     foodimage: "images/JollofRiceandTFish.jpg",
     title: "Jollof and Fried Rice With Fish",
-    price: "2000",
+    price: 2000,
   },
+
   // Rice
   {
     id: 20,
@@ -68,32 +80,8 @@ const menuData = [
     title: "A Scoop of Jollof Rice",
     price: 700,
   },
-  {
-    id: 24,
-    foodimage: "images/whiterice.jpg",
-    title: "A Scoop White Rice",
-    price: 700,
-  },
-  {
-    id: 34,
-    foodimage: "images/Stew.jpg",
-    title: " Buka stew. 2.5 litres of Stew with Turkey,beef and ponmo",
-    price: 25000,
-  },
-  {
-    id: 35,
-    foodimage: "images/Stew1.jpg",
-    title: " Stew",
-    price: 10000,
-  },
-  {
-    id: 36,
-    foodimage: "images/ESoup.jpg",
-    title: " Efo Riro",
-    price: 25000,
-  },
 
-  // 🆕 Spaghetti
+  // Spaghetti
   {
     id: 90,
     foodimage: "images/SpagChi.jpg",
@@ -104,7 +92,7 @@ const menuData = [
     id: 91,
     foodimage: "images/SpagTur.jpg",
     title: "Stir fry spaghetti with Turkey",
-    price: 6400,
+    price: 6500,
   },
   {
     id: 92,
@@ -113,9 +101,23 @@ const menuData = [
     price: 3500,
   },
 
-  // Meat
+  // Fries
+  {
+    id: 80,
+    foodimage: "images/TurNdPota.jpg",
+    title: "Turkey & Sweet Potato Chips",
+    price: 6600,
+  },
+  {
+    id: 81,
+    foodimage: "images/ChikenFries.jpg",
+    title: "Chicken & Sweet Potato Chips",
+    price: 4600,
+  },
+
+  // Protein
   { id: 42, foodimage: "images/cow meat.jpg", title: "Beef", price: 1000 },
-  { id: 43, foodimage: "images/fish.jpg", title: "Fish", price: 300 },
+  { id: 43, foodimage: "images/fish.jpg", title: "Fish", price: 1500 },
   {
     id: 45,
     foodimage: "images/ChickWing.jpg",
@@ -135,33 +137,15 @@ const menuData = [
     price: 4500,
   },
 
-  // Snacks
-
+  // Soup
   {
-    id: 62,
-    foodimage: "images/Salad.jpg",
-    title: "Vegetable salad/ Coleslaw",
-    price: 700,
+    id: 34,
+    foodimage: "images/Stew.jpg",
+    title: "Buka stew (2.5 litres with Turkey, beef & ponmo)",
+    price: 25000,
   },
-  {
-    id: 62,
-    foodimage: "images/SmallChop.jpg",
-    title: "Small Chips Tray",
-    price: 10000,
-  },
-  // Fries
-  {
-    id: 80,
-    foodimage: "images/TurNdPota.jpg",
-    title: "Turkey & Sweet Potato Chips",
-    price: 6600,
-  },
-  {
-    id: 81,
-    foodimage: "images/ChikenFries.jpg",
-    title: "Chicken & Sweet Potato Chips",
-    price: 4600,
-  },
+  { id: 35, foodimage: "images/Stew1.jpg", title: "Stew", price: 10000 },
+  { id: 36, foodimage: "images/ESoup.jpg", title: "Efo Riro", price: 25000 },
 
   // Drinks
   {
@@ -202,9 +186,23 @@ const menuData = [
     price: 1200,
   },
   { id: 77, foodimage: "images/Malt.jpg", title: "Maltina Drink", price: 1200 },
+
+  // Extra / Misc
+  {
+    id: 62,
+    foodimage: "images/Salad.jpg",
+    title: "Vegetable Salad / Coleslaw",
+    price: 700,
+  },
+  {
+    id: 62,
+    foodimage: "images/SmallChop.jpg",
+    title: "Small Chops Tray",
+    price: 10000,
+  },
 ];
 
-// ===== RENDER MENU =====
+// ===================== RENDER MENU =====================
 function renderMenu(data) {
   card.innerHTML = data
     .map(
@@ -227,31 +225,36 @@ function renderMenu(data) {
     `
     )
     .join("");
+
   attachEvents();
 }
 
-// ===== PLUS/MINUS/ADD LOGIC =====
+// ===================== PLUS / MINUS / ADD LOGIC =====================
 function attachEvents() {
   document.querySelectorAll(".afood").forEach((food) => {
     const qtyDiv = food.querySelector(".quantity");
     const plusBtn = food.querySelector(".plus");
     const minusBtn = food.querySelector(".minus");
-    const price = food.querySelector(".price");
-    const usedprice = Number(price.textContent.replace("₦", ""));
+    const usedprice = Number(
+      food.querySelector(".price").textContent.replace("₦", "")
+    );
     const crtbtn = food.querySelector(".crtbtn");
+
     let qty = 0;
 
     plusBtn.addEventListener("click", () => {
       qty++;
       qtyDiv.textContent = qty;
-      price.textContent = `₦${usedprice * qty}`;
+      food.querySelector(".price").textContent = `₦${usedprice * qty}`;
     });
 
     minusBtn.addEventListener("click", () => {
       if (qty > 0) {
         qty--;
         qtyDiv.textContent = qty;
-        price.textContent = qty ? `₦${usedprice * qty}` : `₦${usedprice}`;
+        food.querySelector(".price").textContent = qty
+          ? `₦${usedprice * qty}`
+          : `₦${usedprice}`;
       }
     });
 
@@ -284,55 +287,67 @@ function attachEvents() {
   });
 }
 
-// ===== FILTER FUNCTION =====
+// ===================== FILTER FUNCTION =====================
 function filterByCategory(category) {
   let filtered;
+
   switch (category) {
-    case "combo":
-      filtered = menuData.filter((item) => String(item.id).startsWith("1"));
-      break;
     case "rice":
-      filtered = menuData.filter((item) => String(item.id).startsWith("2"));
+      filtered = menuData.filter((item) =>
+        ["1", "2"].includes(String(item.id)[0])
+      );
       break;
+
     case "soup":
       filtered = menuData.filter((item) => String(item.id).startsWith("3"));
       break;
-    case "meat":
+
+    case "protein":
       filtered = menuData.filter((item) => String(item.id).startsWith("4"));
       break;
-    case "snacks":
-      filtered = menuData.filter((item) => String(item.id).startsWith("6"));
-      break;
+
     case "drinks":
       filtered = menuData.filter((item) => String(item.id).startsWith("7"));
       break;
+
     case "fries":
       filtered = menuData.filter((item) => String(item.id).startsWith("8"));
       break;
-    case "spaghetti": // 🆕
+
+    case "spaghetti":
       filtered = menuData.filter((item) => String(item.id).startsWith("9"));
       break;
+
+    case "etc":
+      filtered = menuData.filter(
+        (item) =>
+          !["1", "2", "3", "4", "7", "8", "9"].includes(String(item.id)[0])
+      );
+      break;
+
     default:
       filtered = menuData;
   }
+
   renderMenu(filtered);
 }
 
-// ===== FILTER BUTTON LOGIC =====
+// ===================== FILTER BUTTON LOGIC =====================
 document.querySelectorAll(".filter-bar button").forEach((btn) => {
   btn.addEventListener("click", () => {
     document
       .querySelectorAll(".filter-bar button")
       .forEach((b) => b.classList.remove("active"));
+
     btn.classList.add("active");
-    const category = btn.dataset.category;
-    filterByCategory(category);
-    document.getElementById("searchInput").value = ""; // clear search
+    filterByCategory(btn.dataset.category);
+    document.getElementById("searchInput").value = "";
   });
 });
 
-// ===== SEARCH FUNCTION =====
+// ===================== SEARCH FUNCTION =====================
 const searchInput = document.getElementById("searchInput");
+
 if (searchInput) {
   searchInput.addEventListener("input", (e) => {
     const term = e.target.value.toLowerCase().trim();
@@ -341,26 +356,32 @@ if (searchInput) {
 
     let filtered = menuData;
 
-    // apply category filter first
-    if (currentCategory !== "all") {
+    if (currentCategory === "rice") {
       filtered = menuData.filter((item) =>
-        String(item.id).startsWith(
-          {
-            swallow: "1",
-            rice: "2",
-            soup: "3",
-            meat: "4",
-            beans: "5",
-            snacks: "6",
-            drinks: "7",
-            fries: "8",
-            spaghetti: "9", // 🆕
-          }[currentCategory]
-        )
+        ["1", "2"].includes(String(item.id)[0])
       );
+    } else if (currentCategory === "etc") {
+      filtered = menuData.filter(
+        (item) =>
+          !["1", "2", "3", "4", "7", "8", "9"].includes(String(item.id)[0])
+      );
+    } else if (currentCategory !== "all") {
+      const prefix = {
+        soup: "3",
+        protein: "4",
+        snacks: "6",
+        drinks: "7",
+        fries: "8",
+        spaghetti: "9",
+      }[currentCategory];
+
+      if (prefix) {
+        filtered = menuData.filter((item) =>
+          String(item.id).startsWith(prefix)
+        );
+      }
     }
 
-    // apply search filter
     filtered = filtered.filter((item) =>
       item.title.toLowerCase().includes(term)
     );
@@ -369,7 +390,7 @@ if (searchInput) {
   });
 }
 
-// ===== CART BUTTON =====
+// ===================== CART BUTTON =====================
 if (cartBtn) {
   cartBtn.addEventListener("click", (e) => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -382,5 +403,5 @@ if (cartBtn) {
   });
 }
 
-// ===== INITIAL LOAD =====
+// ===================== INITIAL LOAD =====================
 renderMenu(menuData);
