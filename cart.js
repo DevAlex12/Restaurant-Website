@@ -1,8 +1,8 @@
 window.addEventListener("load", () => {
   const body = document.body;
 
-  const main = document.createElement("div");
-  main.innerHTML = `
+  // Inject Structure
+  body.innerHTML += `
     <div class="cart-items"></div>
 
     <div class="total-section">
@@ -11,7 +11,6 @@ window.addEventListener("load", () => {
     </div>
 
     <button class="order-main">Order Now</button>
-
     <button class="clearCart">Clear Cart</button>
 
     <button class="order-floating">🛒</button>
@@ -20,12 +19,12 @@ window.addEventListener("load", () => {
       <h3>Select Order Method</h3>
 
       <div class="method-option">
-        <input type="radio" name="method" id="pickup" value="pickup" checked>
+        <input type="radio" name="method" value="pickup" id="pickup">
         <label for="pickup">Pickup</label>
       </div>
 
       <div class="method-option">
-        <input type="radio" name="method" id="delivery" value="delivery">
+        <input type="radio" name="method" value="delivery" id="delivery">
         <label for="delivery">Delivery</label>
       </div>
 
@@ -35,40 +34,49 @@ window.addEventListener("load", () => {
       </div>
 
       <button class="order">Proceed</button>
-
       <p class="warning hidden">⚠ Pick an order method first</p>
     </div>
   `;
-  body.appendChild(main);
 
+  // REFS
   const cartContainer = document.querySelector(".cart-items");
   const totalAmount = document.querySelector(".total-amount");
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const floatBtn = document.querySelector(".order-floating");
+  const popup = document.querySelector(".order-popup");
+  const proceedBtn = document.querySelector(".order");
+  const warningText = document.querySelector(".warning");
+  const locationBox = document.querySelector(".location-box");
+  const orderBtn = document.querySelector(".order-main");
 
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let selectedMethod = "";
+
+  // ----- RENDER CART -----
   function renderCart() {
     if (cart.length === 0) {
       cartContainer.innerHTML = `<p>Your cart is empty.</p>`;
       totalAmount.textContent = "₦0";
+      setTimeout(() => (window.location.href = "menu.html"), 300);
       return;
     }
 
     cartContainer.innerHTML = cart
       .map(
         (item, i) => `
-      <div class="cart-item">
-        <div>
-          <h3>${item.title}</h3>
-          <p>Qty: ${item.qty}</p>
-          <p>₦${item.price * item.qty}</p>
+        <div class="cart-item">
+          <div>
+            <h3>${item.title}</h3>
+            <p>Qty: ${item.qty}</p>
+            <p>₦${item.price * item.qty}</p>
+          </div>
+          <button class="delete-btn" data-index="${i}">🗑️</button>
         </div>
-        <button class="delete-btn" data-index="${i}">🗑️</button>
-      </div>
-    `
+      `
       )
       .join("");
 
     computeTotal();
-    attachDeleteEvents();
+    attachDelete();
   }
 
   function computeTotal() {
@@ -76,106 +84,86 @@ window.addEventListener("load", () => {
     totalAmount.textContent = `₦${total}`;
   }
 
-  function attachDeleteEvents() {
+  function attachDelete() {
     document.querySelectorAll(".delete-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const index = btn.dataset.index;
-        cart.splice(index, 1);
+      btn.onclick = () => {
+        const i = btn.dataset.index;
+        cart.splice(i, 1);
         localStorage.setItem("cart", JSON.stringify(cart));
         renderCart();
-      });
+      };
     });
   }
 
-  // ORDER POPUP
-  const orderFloatingBtn = document.querySelector(".order-floating");
-  const orderPopup = document.querySelector(".order-popup");
-  const warningText = document.querySelector(".warning");
-
-  orderFloatingBtn.addEventListener("click", () => {
+  // ----- FLOAT BUTTON -----
+  floatBtn.addEventListener("click", () => {
     if (cart.length === 0) return (window.location.href = "menu.html");
-    orderPopup.classList.toggle("hidden");
+    popup.classList.toggle("hidden");
   });
 
-  const pickupRadio = document.getElementById("pickup");
-  const deliveryRadio = document.getElementById("delivery");
-  const locationBox = document.querySelector(".location-box");
+  // ----- CHOOSE METHOD -----
+  document.querySelectorAll("input[name='method']").forEach((radio) => {
+    radio.addEventListener("change", () => {
+      selectedMethod = radio.value;
+      floatBtn.classList.add("noPulse");
 
-  pickupRadio.addEventListener("change", () => {
-    locationBox.classList.add("hidden");
+      if (selectedMethod === "delivery") {
+        locationBox.classList.remove("hidden");
+      } else {
+        locationBox.classList.add("hidden");
+      }
+    });
   });
 
-  deliveryRadio.addEventListener("change", () => {
-    locationBox.classList.remove("hidden");
-  });
-
-  // PROCEED BUTTON
-  let chosenMethod = null;
-  let chosenLocation = "";
-
-  document.querySelector(".order").addEventListener("click", () => {
-    chosenMethod = pickupRadio.checked ? "Pickup" : "Delivery";
-    chosenLocation = document.getElementById("deliveryLocation").value.trim();
-
-    if (chosenMethod === "Delivery" && chosenLocation === "") {
-      showWarning("Enter delivery location");
+  // ----- PROCEED -----
+  proceedBtn.addEventListener("click", () => {
+    if (!selectedMethod) {
+      warningText.textContent = "Choose a method";
+      warningText.classList.remove("hidden");
       return;
+    }
+
+    if (selectedMethod === "delivery") {
+      const loc = document.getElementById("deliveryLocation").value.trim();
+      if (loc === "") {
+        warningText.textContent = "Enter delivery address";
+        warningText.classList.remove("hidden");
+        return;
+      }
     }
 
     warningText.classList.add("hidden");
-    orderPopup.classList.add("hidden");
+    popup.classList.add("hidden");
   });
 
-  // MAIN ORDER BUTTON
-  document.querySelector(".order-main").addEventListener("click", () => {
-    if (cart.length === 0) {
-      window.location.href = "menu.html";
+  // ----- SEND ORDER TO WHATSAPP -----
+  orderBtn.addEventListener("click", () => {
+    if (!selectedMethod) {
+      popup.classList.remove("hidden");
       return;
     }
 
-    // ⭐ FIX: Reset delivery input visibility based on saved choice
-    if (pickupRadio.checked) {
-      locationBox.classList.add("hidden");
-    } else {
-      locationBox.classList.remove("hidden");
-    }
-
-    if (!chosenMethod) {
-      showWarning("Pick order method first!");
-      orderPopup.classList.remove("hidden");
-      return;
-    }
-
-    let total = 0;
-    let message = "Hello, I would like to place an order:\n\n";
+    let message = "🛒 *New Order*%0A%0A";
 
     cart.forEach((item) => {
-      const sub = item.qty * item.price;
-      total += sub;
-      message += `• ${item.title}\nQty: ${item.qty}\nSubtotal: ₦${sub}\n\n`;
+      message += `• ${item.title} x${item.qty} — ₦${item.price * item.qty}%0A`;
     });
 
-    message += `TOTAL: ₦${total}\n`;
-    message += `Method: ${chosenMethod}\n`;
+    message += `%0A*Total:* ${totalAmount.textContent}%0A`;
+    message += `*Method:* ${selectedMethod}%0A`;
 
-    if (chosenMethod === "Delivery") {
-      message += `Location: ${chosenLocation}\n`;
+    if (selectedMethod === "delivery") {
+      let loc = document.getElementById("deliveryLocation").value;
+      message += `*Address:* ${loc}%0A`;
     }
 
-    const phone = "+2349138699736";
-    const link = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.open(link, "_blank");
+    let phoneNumber = "2347038480670";
+    let url = `https://wa.me/${phoneNumber}?text=${message}`;
+
+    window.open(url, "_blank");
   });
 
-  function showWarning(text) {
-    warningText.textContent = "⚠ " + text;
-    warningText.classList.remove("hidden");
-
-    warningText.classList.add("shake");
-    setTimeout(() => warningText.classList.remove("shake"), 600);
-  }
-
-  // CLEAR CART
+  // ----- CLEAR CART -----
   document.querySelector(".clearCart").addEventListener("click", () => {
     localStorage.removeItem("cart");
     cart = [];
