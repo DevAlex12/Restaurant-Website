@@ -46,13 +46,13 @@ const menuData = [
     id: 10,
     foodimage: "images/JRT.jpg",
     title: "Jollof Rice With Turkey",
-    price: 4500,
+    price: 6500,
   },
   {
     id: 10,
     foodimage: "images/JFT.jpg",
     title: "Jollof and Fried Rice With Turkey",
-    price: 4500,
+    price: 6500,
   },
   {
     id: 11,
