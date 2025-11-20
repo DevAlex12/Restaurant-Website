@@ -1,42 +1,45 @@
 window.addEventListener("load", () => {
   const body = document.body;
 
-  // Inject Structure
   body.innerHTML += `
-    <div class="cart-items"></div>
+  <nav class="cart-nav">
+    <button class="back-btn">←</button>
+    <h2>YOUR CART</h2>
+  </nav>
+  <div class="cart-items"></div>
 
-    <div class="total-section">
-      <span>Total:</span>
-      <span class="total-amount">₦0</span>
+  <div class="total-section">
+    <span>Total:</span>
+    <span class="total-amount">₦0</span>
+  </div>
+
+  <button class="order-main">Order Now</button>
+  <button class="clearCart">Clear Cart</button>
+
+  <button class="order-floating">🛒</button>
+
+  <div class="order-popup hidden">
+    <h3>Select Order Method</h3>
+
+    <div class="method-option">
+      <input type="radio" name="method" value="pickup" id="pickup">
+      <label for="pickup">Pickup</label>
     </div>
 
-    <button class="order-main">Order Now</button>
-    <button class="clearCart">Clear Cart</button>
-
-    <button class="order-floating">🛒</button>
-
-    <div class="order-popup hidden">
-      <h3>Select Order Method</h3>
-
-      <div class="method-option">
-        <input type="radio" name="method" value="pickup" id="pickup">
-        <label for="pickup">Pickup</label>
-      </div>
-
-      <div class="method-option">
-        <input type="radio" name="method" value="delivery" id="delivery">
-        <label for="delivery">Delivery</label>
-      </div>
-
-      <div class="location-box hidden">
-        <label>Enter Delivery Location:</label>
-        <input type="text" id="deliveryLocation" placeholder="Your address...">
-      </div>
-
-      <button class="order">Proceed</button>
-      <p class="warning hidden">⚠ Pick an order method first</p>
+    <div class="method-option">
+      <input type="radio" name="method" value="delivery" id="delivery">
+      <label for="delivery">Delivery</label>
     </div>
-  `;
+
+    <div class="location-box hidden">
+      <label>Enter Delivery Location:</label>
+      <input type="text" id="deliveryLocation" placeholder="Your address...">
+    </div>
+
+    <button class="order">Proceed</button>
+    <p class="warning hidden">⚠ Pick an order method first</p>
+  </div>
+`;
 
   // REFS
   const cartContainer = document.querySelector(".cart-items");
@@ -47,6 +50,9 @@ window.addEventListener("load", () => {
   const warningText = document.querySelector(".warning");
   const locationBox = document.querySelector(".location-box");
   const orderBtn = document.querySelector(".order-main");
+  document.querySelector(".back-btn").addEventListener("click", () => {
+    window.location.href = "menu.html";
+  });
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   let selectedMethod = "";
