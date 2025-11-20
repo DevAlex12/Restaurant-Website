@@ -207,6 +207,45 @@ button {
   font-size: 13px;
   font-weight: 500;
 }
+.cart-icon {
+  font-size: 26px;
+  color: #22b238;
+  text-decoration: none;
+
+  /* New styling */
+  background: rgba(255, 255, 255, 0.7); /* soft milky white */
+  padding: 10px 14px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: pulseIcon 1.6s infinite ease-in-out;
+  transition: transform 0.2s ease;
+}
+
+.cart-icon:hover {
+  transform: scale(1.12);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* PULSE ANIMATION */
+@keyframes pulseIcon {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 178, 56, 0.35);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px 5px rgba(34, 178, 56, 0.25);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 178, 56, 0.35);
+  }
+}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {

@@ -196,6 +196,9 @@ body {
 }
 
 .back-btn {
+  font-weight: 900;
+  -webkit-text-stroke: 1px #0bb42e; /* outline thickness */
+  font-size: 27px;
   position: absolute;
   left: 10px;
   top: 50%;
