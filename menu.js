@@ -145,7 +145,7 @@ const menuData = [
     price: 25000,
   },
   { id: 35, foodimage: "images/Stew1.jpg", title: "Stew", price: 10000 },
-  { id: 36, foodimage: "images/ESoup.jpg", title: "Efo Riro", price: 25000 },
+  { id: 36, foodimage: "images/ESoup.jpg", title: "Efo Riro", price: 5500 },
 
   // Drinks
   {
