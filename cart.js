@@ -163,7 +163,7 @@ window.addEventListener("load", () => {
       message += `*Address:* ${loc}%0A`;
     }
 
-    let phoneNumber = "2347038480670";
+    let phoneNumber = "2348138076639";
     let url = `https://wa.me/${phoneNumber}?text=${message}`;
 
     window.open(url, "_blank");
