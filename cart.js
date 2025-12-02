@@ -176,7 +176,7 @@ window.addEventListener("load", () => {
     message += `%0A*Total:* ${totalAmount.textContent}%0A`;
     message += `*Name:* ${name}%0A`;
     message += `*Phone:* ${phone}%0A`;
-    message += `*Method:* ${selectedMethod}%0A`;
+    message += `*Delivery Method:* ${selectedMethod}%0A`;
 
     if (selectedMethod === "delivery") {
       const loc = document.getElementById("deliveryLocation").value;
