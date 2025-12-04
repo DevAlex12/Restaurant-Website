@@ -158,6 +158,7 @@ window.addEventListener("load", () => {
   });
 
   // ----- SEND ORDER TO WHATSAPP -----
+  // ----- SEND ORDER TO WHATSAPP -----
   orderBtn.addEventListener("click", () => {
     const name = document.getElementById("custName").value.trim();
     const phone = document.getElementById("custPhone").value.trim();
@@ -167,24 +168,30 @@ window.addEventListener("load", () => {
       return;
     }
 
-    let message = "🛒 *New Order*%0A%0A";
+    // BUILD MESSAGE CLEANLY (NO %0A ANYWHERE)
+    let message = "🛒 *New Order*\n\n";
 
     cart.forEach((item) => {
-      message += `• ${item.title} x${item.qty} — ₦${item.price * item.qty}%0A`;
+      message += `• ${item.title} x${item.qty} — ₦${item.price * item.qty}\n`;
     });
 
-    message += `%0A*Total:* ${totalAmount.textContent}%0A`;
-    message += `*Name:* ${name}%0A`;
-    message += `*Phone:* ${phone}%0A`;
-    message += `*Delivery Method:* ${selectedMethod}%0A`;
+    message += `\n*Total:* ${totalAmount.textContent}\n`;
+    message += `*Name:* ${name}\n`;
+    message += `*Phone:* ${phone}\n`;
+    message += `*Delivery Method:* ${selectedMethod}\n`;
 
     if (selectedMethod === "delivery") {
       const loc = document.getElementById("deliveryLocation").value;
-      message += `*Address:* ${loc}%0A`;
+      message += `*Address:* ${loc}\n`;
     }
 
     const phoneNumber = "2348138076639";
-    const url = `https://wa.me/${phoneNumber}?text=${message}`;
+
+    // ONLY ENCODE ONCE
+    let url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
     window.open(url, "_blank");
   });
 
