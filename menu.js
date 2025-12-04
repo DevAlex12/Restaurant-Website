@@ -13,7 +13,7 @@ const categories = [
   { key: "protein", label: "Protein" },
   { key: "soup", label: "Soup" },
   { key: "drinks", label: "Drinks" },
-  { key: "etc", label: "E.t.c" }, // LAST
+  { key: "etc", label: "E.t.c" },
 ];
 
 // ===================== GENERATE FILTER BUTTONS =====================
@@ -33,35 +33,35 @@ if (searchContainer) {
   `;
 }
 
-// ===================== MENU DATA =====================
+// ===================== MENU DATA (FIXED UNIQUE IDs) =====================
 const menuData = [
-  // Rice Combo (merged into Rice)
+  // Rice Combo
   {
-    id: 10,
+    id: 11,
     foodimage: "images/JollofRiceWithChicken.jpg",
     title: "Jollof Rice With Chicken",
     price: 4500,
   },
   {
-    id: 10,
+    id: 12,
     foodimage: "images/JRT.jpg",
     title: "Jollof Rice With Turkey",
     price: 6500,
   },
   {
-    id: 10,
+    id: 13,
     foodimage: "images/JFT.jpg",
     title: "Jollof and Fried Rice With Turkey",
     price: 6500,
   },
   {
-    id: 11,
+    id: 14,
     foodimage: "images/JollndFriedAndEgg.jpg",
     title: "Jollof and Fried Rice With Egg",
     price: 2000,
   },
   {
-    id: 12,
+    id: 15,
     foodimage: "images/JollofRiceandTFish.jpg",
     title: "Jollof Rice With Fish",
     price: 3000,
@@ -69,13 +69,13 @@ const menuData = [
 
   // Rice
   {
-    id: 20,
+    id: 21,
     foodimage: "images/FriedRice.jpg",
     title: "A Scoop of Fried Rice",
     price: 700,
   },
   {
-    id: 21,
+    id: 22,
     foodimage: "images/JollofRice.jpg",
     title: "A Scoop of Jollof Rice",
     price: 700,
@@ -83,49 +83,49 @@ const menuData = [
 
   // Spaghetti
   {
-    id: 90,
+    id: 91,
     foodimage: "images/SpagChi.jpg",
     title: "Stir Fry Spaghetti with Chicken",
     price: 4500,
   },
   {
-    id: 91,
+    id: 92,
     foodimage: "images/SpagTur.jpg",
     title: "Stir fry spaghetti with Turkey",
     price: 6500,
   },
   {
-    id: 92,
+    id: 93,
     foodimage: "images/Spag2.jpg",
-    title: "Stir fry spaghetti with chicken cheaper chow budget",
+    title: "Stir fry spaghetti (Budget)",
     price: 3500,
   },
 
   // Fries
   {
-    id: 80,
+    id: 81,
     foodimage: "images/TurNdPota.jpg",
     title: "Turkey & Sweet Potato Chips",
     price: 6600,
   },
   {
-    id: 81,
+    id: 82,
     foodimage: "images/ChikenFries.jpg",
     title: "Chicken & Sweet Potato Chips",
     price: 4600,
   },
 
   // Protein
-  { id: 42, foodimage: "images/cow meat.jpg", title: "Beef", price: 1000 },
-  { id: 43, foodimage: "images/fish.jpg", title: "Fish", price: 1500 },
+  { id: 41, foodimage: "images/cow meat.jpg", title: "Beef", price: 1000 },
+  { id: 42, foodimage: "images/fish.jpg", title: "Fish", price: 1500 },
   {
-    id: 45,
+    id: 43,
     foodimage: "images/ChickWing.jpg",
     title: "Chicken Wings",
     price: 3000,
   },
   {
-    id: 45,
+    id: 44,
     foodimage: "images/ChickLap.jpg",
     title: "Chicken Lap",
     price: 3000,
@@ -139,57 +139,57 @@ const menuData = [
 
   // Soup
   {
-    id: 34,
+    id: 31,
     foodimage: "images/Stew.jpg",
-    title: "Buka stew (2.5 litres with Turkey, beef & ponmo)",
+    title: "Buka stew (2.5 litres)",
     price: 25000,
   },
-  { id: 35, foodimage: "images/Stew1.jpg", title: "Stew", price: 10000 },
-  { id: 36, foodimage: "images/ESoup.jpg", title: "Efo Riro", price: 5500 },
+  { id: 32, foodimage: "images/Stew1.jpg", title: "Stew", price: 10000 },
+  { id: 33, foodimage: "images/ESoup.jpg", title: "Efo Riro", price: 5500 },
 
   // Drinks
   {
-    id: 70,
+    id: 71,
     foodimage: "images/BigExotic.jpg",
     title: "Big Chilled Exotic",
     price: 2200,
   },
   {
-    id: 71,
+    id: 72,
     foodimage: "images/HollaYo.jpg",
     title: "Hollandia Yoghurt",
     price: 2500,
   },
   {
-    id: 72,
+    id: 73,
     foodimage: "images/CarDrink.jpg",
     title: "Carbonated Drinks",
     price: 500,
   },
-  { id: 73, foodimage: "images/Water.jpg", title: "Bottled Water", price: 300 },
+  { id: 74, foodimage: "images/Water.jpg", title: "Bottled Water", price: 300 },
   {
-    id: 74,
+    id: 75,
     foodimage: "images/ChiActive.jpg",
     title: "Chivita Active Fruit Juice",
     price: 2500,
   },
   {
-    id: 75,
+    id: 76,
     foodimage: "images/BigSoDrink.jpg",
     title: "Big Sosa Drink",
     price: 1200,
   },
   {
-    id: 76,
+    id: 77,
     foodimage: "images/PulpyOrange.jpg",
     title: "Pulpy Orange",
     price: 1200,
   },
-  { id: 77, foodimage: "images/Malt.jpg", title: "Maltina Drink", price: 1200 },
+  { id: 78, foodimage: "images/Malt.jpg", title: "Maltina Drink", price: 1200 },
 
-  // Extra / Misc
+  // Etc
   {
-    id: 62,
+    id: 61,
     foodimage: "images/Salad.jpg",
     title: "Vegetable Salad / Coleslaw",
     price: 700,
@@ -356,30 +356,12 @@ if (searchInput) {
 
     let filtered = menuData;
 
-    if (currentCategory === "rice") {
+    if (currentCategory !== "all") {
       filtered = menuData.filter((item) =>
-        ["1", "2"].includes(String(item.id)[0])
+        filterByCategory(currentCategory)
+          .map((f) => f.id)
+          .includes(item.id)
       );
-    } else if (currentCategory === "etc") {
-      filtered = menuData.filter(
-        (item) =>
-          !["1", "2", "3", "4", "7", "8", "9"].includes(String(item.id)[0])
-      );
-    } else if (currentCategory !== "all") {
-      const prefix = {
-        soup: "3",
-        protein: "4",
-        snacks: "6",
-        drinks: "7",
-        fries: "8",
-        spaghetti: "9",
-      }[currentCategory];
-
-      if (prefix) {
-        filtered = menuData.filter((item) =>
-          String(item.id).startsWith(prefix)
-        );
-      }
     }
 
     filtered = filtered.filter((item) =>
