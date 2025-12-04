@@ -105,13 +105,13 @@ const menuData = [
   {
     id: 81,
     foodimage: "images/TurNdPota.jpg",
-    title: "Turkey & Sweet Potato Chips",
+    title: "Turkey and Sweet Potato Chips",
     price: 6600,
   },
   {
     id: 82,
     foodimage: "images/ChikenFries.jpg",
-    title: "Chicken & Sweet Potato Chips",
+    title: "Chicken and Sweet Potato Chips",
     price: 4600,
   },
 

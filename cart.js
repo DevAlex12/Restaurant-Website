@@ -184,9 +184,7 @@ window.addEventListener("load", () => {
     }
 
     const phoneNumber = "2348138076639";
-    let url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message
-    )}`;
+    const url = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(url, "_blank");
   });
 
