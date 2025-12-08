@@ -84,7 +84,7 @@ const menuData = [
   // Spaghetti
   {
     id: 94,
-    foodimage: "images/Spag2",
+    foodimage: "images/Spag2.jpg",
     title: "A scoop of Stir Fry Spaghetti",
     price: 700,
   },
