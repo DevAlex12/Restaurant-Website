@@ -2,7 +2,6 @@
 const card = document.querySelector(".foods");
 const cartBtn = document.querySelector(".cart-icon");
 const filterBar = document.querySelector(".filter-bar");
-const searchContainer = document.querySelector(".search-container");
 
 // ===================== CATEGORIES =====================
 const categories = [
@@ -25,14 +24,6 @@ filterBar.innerHTML = categories
       </button>`
   )
   .join("");
-
-// ===================== ADD SEARCH BAR =====================
-if (searchContainer) {
-  searchContainer.innerHTML = `
-    <input type="text" id="searchInput" placeholder="Search for food or drink..." />
-  `;
-}
-
 // ===================== MENU DATA (FIXED UNIQUE IDs) =====================
 const menuData = [
   // Rice Combo
@@ -84,7 +75,7 @@ const menuData = [
   // Spaghetti
   {
     id: 94,
-    foodimage: "images/Spag2",
+    foodimage: "images/Spag2.jpg",
     title: "A scoop of Stir Fry Spaghetti",
     price: 700,
   },
@@ -350,34 +341,6 @@ document.querySelectorAll(".filter-bar button").forEach((btn) => {
     document.getElementById("searchInput").value = "";
   });
 });
-
-// ===================== SEARCH FUNCTION =====================
-const searchInput = document.getElementById("searchInput");
-
-if (searchInput) {
-  searchInput.addEventListener("input", (e) => {
-    const term = e.target.value.toLowerCase().trim();
-    const currentCategory = document.querySelector(".filter-bar .active")
-      .dataset.category;
-
-    let filtered = menuData;
-
-    if (currentCategory !== "all") {
-      filtered = menuData.filter((item) =>
-        filterByCategory(currentCategory)
-          .map((f) => f.id)
-          .includes(item.id)
-      );
-    }
-
-    filtered = filtered.filter((item) =>
-      item.title.toLowerCase().includes(term)
-    );
-
-    renderMenu(filtered);
-  });
-}
-
 // ===================== CART BUTTON =====================
 if (cartBtn) {
   cartBtn.addEventListener("click", (e) => {
