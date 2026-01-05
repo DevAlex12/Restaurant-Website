@@ -71,6 +71,18 @@ const menuData = [
     title: "A Scoop of Jollof Rice",
     price: 700,
   },
+  {
+    id: 23,
+    foodimage: "images/Feedme.jpg",
+    title: "Welcome back package 1",
+    price: "5000",
+  },
+  {
+    id: 23,
+    foodimage: "images/Feedme.jpg",
+    title: "Welcome back package 2",
+    price: "4000",
+  },
 
   // Spaghetti
   {
