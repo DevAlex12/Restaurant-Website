@@ -123,6 +123,12 @@ const menuData = [
     title: "Chicken and Sweet Potato Chips",
     price: 4600,
   },
+  {
+    id: 83,
+    foodimage: "images/Dodo1.jpg",
+    title: "Plantain",
+    price: 500,
+  },
 
   // Protein
   { id: 41, foodimage: "images/cow meat.jpg", title: "Beef", price: 1000 },
