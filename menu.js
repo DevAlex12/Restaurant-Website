@@ -129,10 +129,21 @@ const menuData = [
     title: "Plantain",
     price: 500,
   },
+  {
+    id: 61,
+    foodimage: "images/Salad.jpg",
+    title: "Vegetable Salad / Coleslaw",
+    price: 700,
+  },
 
   // Protein
   { id: 41, foodimage: "images/cow meat.jpg", title: "Beef", price: 1000 },
-  { id: 42, foodimage: "images/fish.jpg", title: "Fish", price: 1500 },
+  {
+    id: 42,
+    foodimage: "images/JollofRiceandTFish.jpg",
+    title: "Fish",
+    price: 1500,
+  },
   {
     id: 43,
     foodimage: "images/ChickWing.jpg",
@@ -152,14 +163,7 @@ const menuData = [
     price: 4500,
   },
 
-  // Soup
-  {
-    id: 31,
-    foodimage: "images/Stew.jpg",
-    title: "Buka stew (2.5 litres)",
-    price: 25000,
-  },
-  { id: 32, foodimage: "images/Stew1.jpg", title: "Stew", price: 10000 },
+  // Soupss
   { id: 33, foodimage: "images/ESoup.jpg", title: "Efo Riro", price: 5500 },
 
   // Drinks
@@ -192,29 +196,17 @@ const menuData = [
     id: 76,
     foodimage: "images/BigSoDrink.jpg",
     title: "Big Sosa Drink",
-    price: 1200,
+    price: 1500,
   },
   {
     id: 77,
     foodimage: "images/PulpyOrange.jpg",
     title: "Pulpy Orange",
-    price: 1200,
+    price: 1500,
   },
-  { id: 78, foodimage: "images/Malt.jpg", title: "Maltina Drink", price: 1200 },
+  { id: 78, foodimage: "images/Malt.jpg", title: "Maltina Drink", price: 800 },
 
   // Etc
-  {
-    id: 61,
-    foodimage: "images/Salad.jpg",
-    title: "Vegetable Salad / Coleslaw",
-    price: 700,
-  },
-  {
-    id: 62,
-    foodimage: "images/SmallChop.jpg",
-    title: "Small Chops Tray",
-    price: 10000,
-  },
 ];
 
 // ===================== RENDER MENU =====================
