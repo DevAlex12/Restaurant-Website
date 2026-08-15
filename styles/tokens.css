@@ -7,26 +7,39 @@
    ========================================================= */
 
 :root {
-  /* ---- Color ---- */
-  --ink: #241a12;          /* charred-pot near-black, warm not cool */
-  --ink-soft: #5c4c3d;     /* secondary text on light surfaces */
-  --base: #fff6e9;         /* kraft / pounded-yam warm ivory */
-  --base-dim: #f6ecd9;     /* slightly deeper base for section bands */
-  --surface: #ffffff;      /* card surface */
-  --line: #ead9bd;         /* hairline warm border */
-  --line-strong: #dcc59d;
+  /* ---- Color ----
+     Brand: Papilz green + white (from logo, #0d2c26).
+     Green carries trust/fresh/"go" — it's the identity.
+     Gold is the appetite trigger (warmth, palm oil, sunshine) used on
+     the actions we want tapped — food-industry colour psychology says
+     warm accents on a cool/green base convert better than either alone.
+     A pinch of pepper-red marks "hot/spicy" and urgency, never structure. */
+  --ink: #12271f;           /* deep green-black text, ties copy to brand */
+  --ink-soft: #52685d;      /* secondary text, green-grey */
+  --base: #fbf7ee;          /* warm white — appetizing, not clinical */
+  --base-dim: #f1ecdd;      /* deeper band for section contrast */
+  --surface: #ffffff;       /* card surface */
+  --line: #e2e3d6;          /* hairline border */
+  --line-strong: #cfd6c4;
 
-  --primary: #e04a24;      /* jollof pepper red-orange */
-  --primary-dark: #b93a1b;
-  --primary-tint: #fde6dd;
+  --brand-green-deep: #0d2c26;  /* logo background — nav, footer, hero */
+  --brand-green: #15382e;       /* secondary deep green surface */
 
-  --gold: #ef9d0e;         /* palm oil / fried plantain gold */
-  --gold-tint: #fdedcc;
+  /* Action colour: warm gold reads as "tap me" against the green/white
+     brand shell — the same reason fast-food menus flag hot items in
+     amber, not in the brand's own cool colour. */
+  --primary: #ef9d0e;
+  --primary-dark: #c67c05;
+  --primary-tint: #fdefd4;
 
-  --green: #3f7a34;        /* ugu / efo riro leaf green */
-  --green-tint: #e4efdd;
+  --gold: #ef9d0e;
+  --gold-dark: #c67c05;
+  --gold-tint: #fdefd4;
 
-  --danger: #c62828;
+  --green: #147a4e;        /* brand green for "done/success", links, tags */
+  --green-tint: #e2f3e8;
+
+  --danger: #d1402a;       /* pepper red — remove/alert/"spicy" only */
 
   /* ---- Type ---- */
   --font-display: "Fraunces", "Georgia", serif;
@@ -170,4 +183,144 @@ input:focus-visible {
   border-radius: 50%;
   background: var(--gold);
   flex-shrink: 0;
+}
+
+/* ---- Ankara-inspired diamond texture, used at low opacity for warmth
+   without tipping into "premium minimal" — a nod, not a costume. ---- */
+.brand-pattern {
+  background-image:
+    linear-gradient(135deg, rgba(240,164,30,0.10) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(240,164,30,0.10) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(240,164,30,0.10) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(240,164,30,0.10) 25%, transparent 25%);
+  background-position: 20px 0, 20px 0, 0 0, 0 0;
+  background-size: 40px 40px;
+  background-repeat: repeat;
+}
+
+/* ---- PWA install banner (glassy, sits over the deep green shell) ---- */
+.papilz-install-banner {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 400;
+  max-width: 420px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  padding: 14px 14px 14px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(160deg, rgba(13,44,38,0.82), rgba(13,44,38,0.68));
+  color: #fff;
+  transform: translateY(120%);
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+.papilz-install-banner.show {
+  transform: translateY(0);
+}
+
+.install-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.install-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.install-copy strong {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.install-copy span {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.75);
+}
+
+.install-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.install-btn {
+  background: var(--gold);
+  color: #241a05;
+  border: none;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 9px 16px;
+  border-radius: 999px;
+}
+
+.install-dismiss {
+  background: rgba(255,255,255,0.14);
+  border: none;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ---- Engagement toast (rebrand of .toast for the time-on-site nudge) ---- */
+.papilz-engagement-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 16px);
+  max-width: min(360px, calc(100vw - 32px));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  border-radius: 16px;
+  z-index: 450;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+  background: linear-gradient(160deg, rgba(13,44,38,0.9), rgba(13,44,38,0.76));
+  color: #fff;
+}
+
+.papilz-engagement-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.papilz-engagement-toast .et-emoji {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.papilz-engagement-toast .et-text {
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.papilz-engagement-toast .et-text b {
+  color: var(--gold);
+}
+
+/* ---- Glassmorphism panel ---- */
+.glass-panel {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+  border: 1px solid rgba(255,255,255,0.28);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 8px 32px -12px rgba(9,25,20,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
 }

@@ -4,15 +4,28 @@
   left: 0;
   right: 0;
   z-index: 20;
-  padding: 22px 28px;
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
 }
 
 .wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 20px;
+  font-size: 19px;
   color: #fff;
   letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.wordmark-badge {
+  height: 40px;
+  width: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px -4px rgba(0,0,0,0.5);
 }
 
 .wordmark-accent {
@@ -41,9 +54,9 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(36, 20, 12, 0.55) 0%,
-    rgba(36, 20, 12, 0.25) 35%,
-    rgba(24, 14, 9, 0.85) 100%
+    rgba(13, 44, 38, 0.6) 0%,
+    rgba(13, 44, 38, 0.28) 35%,
+    rgba(10, 30, 25, 0.9) 100%
   );
 }
 
@@ -167,5 +180,70 @@
   }
   .hero-content {
     padding-bottom: 48px;
+  }
+}
+
+/* ===== FOOD SHORTS ===== */
+.shorts {
+  background: var(--brand-green-deep);
+  padding: 64px 28px 76px;
+}
+
+.shorts-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.eyebrow-dark {
+  color: var(--gold);
+}
+
+.shorts-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 5vw, 40px);
+  color: #fff;
+  margin: 10px 0 10px;
+  letter-spacing: -0.01em;
+}
+
+.shorts-sub {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+  max-width: 44ch;
+  margin-bottom: 36px;
+}
+
+.shorts-card {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 9 / 13;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.shorts-badge {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 10px 20px;
+  border-radius: 999px;
+}
+
+@media (max-width: 480px) {
+  .shorts-card {
+    aspect-ratio: 3 / 4;
   }
 }

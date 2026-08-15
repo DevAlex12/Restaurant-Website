@@ -13,10 +13,21 @@
     />
     <link rel="stylesheet" href="styles/tokens.css" />
     <link rel="stylesheet" href="index.css" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#0d2c26" />
+    <link rel="icon" href="icons/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Papilz" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body>
     <nav class="site-nav">
-      <span class="wordmark">Papilz<span class="wordmark-accent">.</span></span>
+      <a href="index.html" class="wordmark"><img src="images/papilz-badge.png" alt="Papilz Foods" class="wordmark-badge" />Papilz<span class="wordmark-accent">.</span></a>
     </nav>
 
     <section class="hero">
@@ -66,5 +77,20 @@
         </div>
       </div>
     </section>
+
+    <section class="shorts brand-pattern" aria-label="Papilz Food Shorts">
+      <div class="shorts-inner">
+        <span class="eyebrow eyebrow-dark">Papilz Foods</span>
+        <h2 class="shorts-heading">Food Shorts</h2>
+        <p class="shorts-sub">Quick, mouth-watering clips from our kitchen — plating, sizzling, the whole vibe.</p>
+
+        <div class="glass-panel shorts-card">
+          <span class="shorts-badge">Coming soon</span>
+        </div>
+      </div>
+    </section>
+
+    <script src="pwa.js"></script>
+    <script src="engagement.js"></script>
   </body>
 </html>

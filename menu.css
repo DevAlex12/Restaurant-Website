@@ -12,11 +12,20 @@
 }
 
 .wordmark-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 19px;
   color: var(--ink);
   text-decoration: none;
+}
+
+.wordmark-dark .wordmark-badge {
+  height: 34px;
+  width: auto;
+  border-radius: 8px;
 }
 
 .wordmark-accent {
