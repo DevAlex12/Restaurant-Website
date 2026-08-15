@@ -10,27 +10,39 @@
 
 const SHORTS = [
   {
-    video: "videos/short-1.mp4",
+    video: "videos/short-1-jollof.mp4",
     poster: "images/jollof-rice-with-chicken.webp",
-    caption: "How to Kidnap me😂😂.",
+    caption: "Jollof rice, sealed in and smoky.",
     cta: "menu",
   },
   {
-    video: "videos/short-2.mp4",
+    video: "videos/short-2-smallchop.mp4",
     poster: "images/small-chop.webp",
-    caption: "SPaghetti with Fish Sauce",
+    caption: "Small chops, hot out of the fryer.",
     cta: "install",
   },
   {
-    video: "videos/short-3.mp4",
+    video: "videos/short-3-spaghetti.mp4",
     poster: "images/stir-fry-spaghetti.webp",
-    caption: "Jolloffffff",
+    caption: "Stir-fry spaghetti, fully loaded.",
     cta: "menu",
   },
   {
-    video: "videos/short-4.mp4",
+    video: "videos/short-4-chicken.mp4",
     poster: "images/chiken-fries.webp",
-    caption: "Spaggggg",
+    caption: "Chicken, extra crispy on the edges.",
+    cta: "install",
+  },
+  {
+    video: "videos/short-5-moimoi.mp4",
+    poster: "images/moimoi.webp",
+    caption: "Moi moi, steamed fresh to order.",
+    cta: "menu",
+  },
+  {
+    video: "videos/short-6-dessert.mp4",
+    poster: "images/icecream.webp",
+    caption: "Something sweet to close it out.",
     cta: "install",
   },
 ];
@@ -40,6 +52,10 @@ const SHORTS = [
   const template = document.getElementById("shortCardTemplate");
   const toast = document.getElementById("shortsToast");
   const toastText = document.getElementById("shortsToastText");
+  const soundPrompt = document.getElementById("soundPrompt");
+  const soundEnableBtn = document.getElementById("soundEnableBtn");
+  const soundSkipBtn = document.getElementById("soundSkipBtn");
+  const SOUND_KEY = "papilz_shorts_sound_on";
 
   if (!feed || !template) return;
 
@@ -51,7 +67,11 @@ const SHORTS = [
     return;
   }
 
-  let userMuted = true;
+  // Sound stays off by default (browsers block unmuted autoplay
+  // without a user gesture anyway). If someone already said yes on a
+  // past visit, start unmuted; otherwise we'll ask.
+  let userMuted = localStorage.getItem(SOUND_KEY) !== "1";
+  const muteButtons = [];
 
   SHORTS.forEach((short) => {
     const node = template.content.cloneNode(true);
@@ -66,15 +86,16 @@ const SHORTS = [
     video.poster = short.poster;
     caption.textContent = short.caption;
 
-    // Show one primary CTA per short (menu or install), matching the
-    // clip's intent, so every short leads somewhere specific.
-    if (short.cta === "install") {
-      menuBtn.remove();
-    } else {
-      installBtn.remove();
-    }
+    // Show one primary CTA per short. Shorts tagged "install" push the
+    // install prompt — but for people who already have the app
+    // installed, that CTA is dead weight, so swap it for a menu link
+    // instead (worded differently from the "menu" shorts' CTA so the
+    // feed doesn't read as repetitive).
+    const alreadyInstalled = window.PapilzPWA && window.PapilzPWA.isInstalled();
+    const wantsInstall = short.cta === "install" && !alreadyInstalled;
 
-    if (installBtn.isConnected) {
+    if (wantsInstall) {
+      menuBtn.remove();
       installBtn.addEventListener("click", async () => {
         if (!window.PapilzPWA) return;
         const result = await window.PapilzPWA.triggerInstall();
@@ -88,17 +109,29 @@ const SHORTS = [
           showToast("Keep browsing a moment, then try again.");
         }
       });
+    } else {
+      installBtn.remove();
+      if (short.cta === "install" && alreadyInstalled) {
+        const arrowSvg = menuBtn.querySelector("svg").outerHTML;
+        menuBtn.innerHTML = "Checkout the menu" + arrowSvg;
+      }
     }
 
     muteBtn.addEventListener("click", () => {
       userMuted = !userMuted;
       video.muted = userMuted;
-      muteBtn.querySelector(".icon-muted").hidden = !userMuted;
-      muteBtn.querySelector(".icon-sound").hidden = userMuted;
+      syncMuteIcon(muteBtn, userMuted);
     });
+    syncMuteIcon(muteBtn, userMuted);
+    muteButtons.push(muteBtn);
 
     feed.appendChild(node);
   });
+
+  function syncMuteIcon(btn, muted) {
+    btn.querySelector(".icon-muted").hidden = !muted;
+    btn.querySelector(".icon-sound").hidden = muted;
+  }
 
   function showToast(message) {
     if (!toast || !toastText) return;
@@ -124,8 +157,39 @@ const SHORTS = [
         }
       });
     },
-    { threshold: [0, 0.6, 1] },
+    { threshold: [0, 0.6, 1] }
   );
 
   cards.forEach((card) => observer.observe(card));
+
+  // ---- Ask permission to turn sound on ----
+  // Every visit where sound isn't already enabled, ask once up front
+  // (rather than leaving people to discover the per-video mute icon).
+  if (userMuted && soundPrompt) {
+    soundPrompt.hidden = false;
+
+    soundEnableBtn?.addEventListener("click", () => {
+      localStorage.setItem(SOUND_KEY, "1");
+      userMuted = false;
+      muteButtons.forEach((btn) => syncMuteIcon(btn, false));
+      soundPrompt.hidden = true;
+
+      // This click is a user gesture, so unmute+play the short
+      // currently in view right away instead of waiting for the next
+      // intersection change.
+      const active = cards.find((c) => {
+        const rect = c.getBoundingClientRect();
+        return rect.top >= -10 && rect.top < window.innerHeight * 0.5;
+      });
+      const activeVideo = active?.querySelector(".short-video");
+      if (activeVideo) {
+        activeVideo.muted = false;
+        activeVideo.play().catch(() => {});
+      }
+    });
+
+    soundSkipBtn?.addEventListener("click", () => {
+      soundPrompt.hidden = true;
+    });
+  }
 })();

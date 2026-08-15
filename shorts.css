@@ -187,6 +187,81 @@ body.shorts-page {
   color: #fff;
 }
 
+/* ---- Sound permission prompt ---- */
+.sound-prompt {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(5, 19, 15, 0.55);
+}
+
+.sound-prompt[hidden] {
+  display: none;
+}
+
+.sound-prompt-card {
+  width: 100%;
+  max-width: 320px;
+  padding: 26px 22px 22px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  color: #fff;
+}
+
+.sound-prompt-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--accent-light);
+  margin-bottom: 6px;
+}
+
+.sound-prompt-card strong {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.sound-prompt-card > span {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.sound-prompt-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+}
+
+.sound-prompt-actions .short-cta-install {
+  justify-content: center;
+}
+
+.sound-prompt-skip {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 10px;
+}
+
 /* ---- Empty state (no shorts configured) ---- */
 .shorts-empty {
   height: 100%;

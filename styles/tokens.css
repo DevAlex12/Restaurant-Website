@@ -29,10 +29,10 @@
   --primary-dark: #0f5f3c;
   --primary-tint: #e2f3e8;
 
-  /* Lighter green for accents that sit ON TOP of the deep green shell
-     (eyebrows, badges over hero/footer) where the main green wouldn't
-     have enough contrast against the dark background. Still green. */
-  --accent-light: #8fdcb2;
+  /* Accents that sit ON TOP of the deep green shell (eyebrows, badges,
+     the engagement-toast dot) use plain white — keeps the palette to
+     strictly green + white, nothing else. */
+  --accent-light: #ffffff;
 
   --green: #147a4e;        /* brand green for "done/success", links, tags */
   --green-tint: #e2f3e8;
