@@ -11,16 +11,19 @@
 const SHORTS = [
   {
     video: "videos/short-1.mp4",
+    poster: "images/jollof-rice-with-chicken.webp",
     caption: "How to Kidnap me😂😂😂.",
     cta: "menu",
   },
   {
     video: "videos/short-2.mp4",
+    poster: "images/small-chop.webp",
     caption: "Spaghetti with Fish Sauce.",
     cta: "install",
   },
   {
     video: "videos/short-3.mp4",
+    poster: "images/stir-fry-spaghetti.webp",
     caption: "jolloffffff.",
     cta: "menu",
   },
