@@ -1,0 +1,173 @@
+/* =========================================================
+   PAPILZ FOODS — DESIGN TOKENS
+   Palette pulled from the food itself: charred-pot ink,
+   kraft-paper base, jollof-pepper red, palm-oil gold,
+   ugu-leaf green. Ticket/receipt motif carries the brand
+   through checkout.
+   ========================================================= */
+
+:root {
+  /* ---- Color ---- */
+  --ink: #241a12;          /* charred-pot near-black, warm not cool */
+  --ink-soft: #5c4c3d;     /* secondary text on light surfaces */
+  --base: #fff6e9;         /* kraft / pounded-yam warm ivory */
+  --base-dim: #f6ecd9;     /* slightly deeper base for section bands */
+  --surface: #ffffff;      /* card surface */
+  --line: #ead9bd;         /* hairline warm border */
+  --line-strong: #dcc59d;
+
+  --primary: #e04a24;      /* jollof pepper red-orange */
+  --primary-dark: #b93a1b;
+  --primary-tint: #fde6dd;
+
+  --gold: #ef9d0e;         /* palm oil / fried plantain gold */
+  --gold-tint: #fdedcc;
+
+  --green: #3f7a34;        /* ugu / efo riro leaf green */
+  --green-tint: #e4efdd;
+
+  --danger: #c62828;
+
+  /* ---- Type ---- */
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+
+  /* ---- Shape / elevation ---- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --shadow-card: 0 1px 2px rgba(36, 26, 18, 0.06), 0 8px 20px -10px rgba(36, 26, 18, 0.18);
+  --shadow-pop: 0 10px 30px -8px rgba(36, 26, 18, 0.35);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 260ms;
+  --dur-slow: 420ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--base);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Guard against component classes (e.g. display:block/flex) overriding the
+   native [hidden] attribute — same specificity, so source order would
+   otherwise decide it. */
+[hidden] {
+  display: none !important;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Shared skeleton shimmer for loading images ---- */
+.skel {
+  position: relative;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.skel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shimmer 1.3s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ---- Shared toast ---- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 16px);
+  background: var(--ink);
+  color: var(--base);
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: var(--shadow-pop);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.toast .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}

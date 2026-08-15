@@ -3,10 +3,110 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Papilz Foods</title>
+    <title>Your Order — Papilz Foods</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/tokens.css" />
     <link rel="stylesheet" href="cart.css" />
   </head>
   <body>
+    <nav class="cart-nav">
+      <button class="back-btn" id="backBtn" aria-label="Back to menu">←</button>
+      <h1>Your order</h1>
+      <span class="nav-spacer"></span>
+    </nav>
+
+    <div class="steps" id="steps">
+      <span class="step active" data-step="0">1 · Cart</span>
+      <span class="step" data-step="1">2 · Details</span>
+      <span class="step" data-step="2">3 · Confirm</span>
+    </div>
+
+    <!-- ===== STEP 0: CART ===== -->
+    <section class="panel" id="panelCart">
+      <div class="ticket" id="ticket">
+        <div class="ticket-notch"></div>
+        <div class="ticket-head">
+          <span>Papilz Foods</span>
+          <span id="ticketDate"></span>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="ticket-divider" aria-hidden="true"></div>
+        <div class="ticket-total-row">
+          <span>Total</span>
+          <span id="totalAmount">₦0</span>
+        </div>
+      </div>
+
+      <div class="empty-cart" id="emptyCart" hidden>
+        <p>Your cart is empty.</p>
+        <a href="menu.html" class="btn-outline">Browse the menu</a>
+      </div>
+
+      <button class="link-btn danger" id="clearCartBtn">Clear cart</button>
+    </section>
+
+    <!-- ===== STEP 1: DETAILS ===== -->
+    <section class="panel" id="panelDetails" hidden>
+      <div class="form-card">
+        <label>Full name</label>
+        <input type="text" id="custName" placeholder="e.g. Ada Obi" autocomplete="name" />
+
+        <label>Phone number</label>
+        <input type="tel" id="custPhone" placeholder="e.g. 0803 000 0000" autocomplete="tel" />
+
+        <label class="field-label-row">Order method</label>
+        <div class="method-options">
+          <label class="method-card" for="pickup">
+            <input type="radio" name="method" value="pickup" id="pickup" />
+            <span>Pickup</span>
+          </label>
+          <label class="method-card" for="delivery">
+            <input type="radio" name="method" value="delivery" id="delivery" />
+            <span>Delivery</span>
+          </label>
+        </div>
+
+        <div class="location-box hidden" id="locationBox">
+          <label>Delivery address</label>
+          <input type="text" id="deliveryLocation" placeholder="Street, area, landmark…" autocomplete="street-address" />
+        </div>
+
+        <p class="warning hidden" id="detailsWarning"></p>
+      </div>
+    </section>
+
+    <!-- ===== STEP 2: CONFIRM ===== -->
+    <section class="panel" id="panelConfirm" hidden>
+      <div class="ticket" id="confirmTicket">
+        <div class="ticket-notch"></div>
+        <div class="ticket-head">
+          <span>Order summary</span>
+          <span id="confirmDate"></span>
+        </div>
+        <div class="confirm-rows" id="confirmRows"></div>
+        <div class="ticket-divider" aria-hidden="true"></div>
+        <div class="ticket-total-row">
+          <span>Total</span>
+          <span id="confirmTotal">₦0</span>
+        </div>
+      </div>
+      <p class="confirm-note">This sends your full order to us on WhatsApp — nothing is charged here.</p>
+    </section>
+
+    <!-- ===== STICKY BOTTOM BAR ===== -->
+    <div class="bottom-bar">
+      <div class="bottom-total">
+        <span class="bottom-total-label" id="bottomLabel">Total</span>
+        <span class="bottom-total-amount" id="bottomTotal">₦0</span>
+      </div>
+      <button class="bottom-cta" id="primaryCta">Continue</button>
+    </div>
+
     <script src="cart.js"></script>
   </body>
 </html>
