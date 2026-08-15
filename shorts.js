@@ -10,39 +10,27 @@
 
 const SHORTS = [
   {
-    video: "videos/short-1-jollof.mp4",
+    video: "videos/short-1.mp4",
     poster: "images/jollof-rice-with-chicken.webp",
-    caption: "Jollof rice, sealed in and smoky.",
+    caption: "This is the only thing that can kidnap me",
     cta: "menu",
   },
   {
-    video: "videos/short-2-smallchop.mp4",
+    video: "videos/short-2.mp4",
     poster: "images/small-chop.webp",
-    caption: "Small chops, hot out of the fryer.",
+    caption: "Spagetti and fish sauce",
     cta: "install",
   },
   {
-    video: "videos/short-3-spaghetti.mp4",
+    video: "videos/short-3.mp4",
     poster: "images/stir-fry-spaghetti.webp",
-    caption: "Stir-fry spaghetti, fully loaded.",
+    caption: "Jollofff",
     cta: "menu",
   },
   {
-    video: "videos/short-4-chicken.mp4",
+    video: "videos/short-4.mp4",
     poster: "images/chiken-fries.webp",
-    caption: "Chicken, extra crispy on the edges.",
-    cta: "install",
-  },
-  {
-    video: "videos/short-5-moimoi.mp4",
-    poster: "images/moimoi.webp",
-    caption: "Moi moi, steamed fresh to order.",
-    cta: "menu",
-  },
-  {
-    video: "videos/short-6-dessert.mp4",
-    poster: "images/icecream.webp",
-    caption: "Something sweet to close it out.",
+    caption: "Spaggggg",
     cta: "install",
   },
 ];
@@ -157,7 +145,7 @@ const SHORTS = [
         }
       });
     },
-    { threshold: [0, 0.6, 1] }
+    { threshold: [0, 0.6, 1] },
   );
 
   cards.forEach((card) => observer.observe(card));
