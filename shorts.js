@@ -12,25 +12,25 @@ const SHORTS = [
   {
     video: "videos/short-1.mp4",
     poster: "images/jollof-rice-with-chicken.webp",
-    caption: "How to Kidnap me😂😂😂.",
+    caption: "JHow to kidnap me oo😂😂.",
     cta: "menu",
   },
   {
     video: "videos/short-2.mp4",
     poster: "images/small-chop.webp",
-    caption: "Spaghetti with Fish Sauce.",
+    caption: "Sphagetti with Fish Sauce.",
     cta: "install",
   },
   {
     video: "videos/short-3.mp4",
     poster: "images/stir-fry-spaghetti.webp",
-    caption: "jolloffffff.",
+    caption: "Jolloffffff",
     cta: "menu",
   },
   {
     video: "videos/short-4.mp4",
     poster: "images/chiken-fries.webp",
-    caption: "Spaggggggggg.",
+    caption: "Spagggggg",
     cta: "install",
   },
 ];
