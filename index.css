@@ -23,7 +23,9 @@
   padding: 9px 14px;
   border-radius: 999px;
   backdrop-filter: blur(6px);
-  transition: transform var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
 }
 
 .shorts-nav-pill:hover {
@@ -47,7 +49,7 @@
   height: 40px;
   width: auto;
   border-radius: 10px;
-  box-shadow: 0 4px 14px -4px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.5);
 }
 
 .wordmark-accent {
@@ -134,14 +136,16 @@
   align-items: center;
   gap: 8px;
   background: var(--primary);
-  color: #fff;
+  color: #efe5e5;
   text-decoration: none;
   font-weight: 600;
   font-size: 15px;
   padding: 14px 22px;
   border-radius: 999px;
   box-shadow: 0 10px 24px -8px rgba(15, 95, 63, 0.5);
-  transition: transform var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
 }
 
 .btn-primary svg {
