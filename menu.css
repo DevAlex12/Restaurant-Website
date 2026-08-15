@@ -32,6 +32,30 @@
   color: var(--primary);
 }
 
+.menu-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shorts-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--brand-green-deep);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.shorts-pill:hover {
+  transform: scale(1.06);
+}
+
 .cart-pill {
   position: relative;
   display: flex;

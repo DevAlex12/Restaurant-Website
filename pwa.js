@@ -1,6 +1,8 @@
 /* Papilz Foods — PWA bootstrap
-   Registers the service worker and shows a branded, glassy "add to home
-   screen" banner instead of the bare browser prompt. */
+   Registers the service worker and shows a branded, glassy "install"
+   banner instead of the bare browser prompt. Also exposes
+   window.PapilzPWA so other pages (e.g. Food Shorts) can trigger the
+   same install flow from their own buttons. */
 
 (function () {
   if ("serviceWorker" in navigator) {
@@ -11,6 +13,17 @@
 
   let deferredPrompt = null;
   const DISMISS_KEY = "papilz_install_dismissed";
+
+  function isStandalone() {
+    return (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true
+    );
+  }
+
+  function isIOS() {
+    return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+  }
 
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
@@ -34,23 +47,20 @@
     banner.innerHTML = `
       <img src="icons/icon-192.png" alt="" class="install-icon" />
       <div class="install-copy">
-        <strong>Add Papilz to your home screen</strong>
+        <strong>Install Papilz</strong>
         <span>One tap next time — no browser, no wahala.</span>
       </div>
       <div class="install-actions">
-        <button type="button" class="install-btn" id="papilzInstallBtn">Add</button>
+        <button type="button" class="install-btn" id="papilzInstallBtn">Install</button>
         <button type="button" class="install-dismiss" id="papilzInstallDismiss" aria-label="Dismiss">✕</button>
       </div>
     `;
     document.body.appendChild(banner);
     requestAnimationFrame(() => banner.classList.add("show"));
 
-    document.getElementById("papilzInstallBtn").addEventListener("click", async () => {
+    document.getElementById("papilzInstallBtn").addEventListener("click", () => {
       hideInstallBanner();
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
+      triggerInstall();
     });
 
     document.getElementById("papilzInstallDismiss").addEventListener("click", () => {
@@ -65,4 +75,25 @@
     el.classList.remove("show");
     setTimeout(() => el.remove(), 300);
   }
+
+  /* Fires the real, native install prompt. Returns a promise resolving
+     to "accepted" | "dismissed" | "unavailable" | "ios" | "installed"
+     so callers (e.g. the Food Shorts CTAs) can react appropriately. */
+  async function triggerInstall() {
+    if (isStandalone()) return "installed";
+    if (!deferredPrompt) {
+      return isIOS() ? "ios" : "unavailable";
+    }
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    return choice.outcome === "accepted" ? "accepted" : "dismissed";
+  }
+
+  window.PapilzPWA = {
+    triggerInstall,
+    isInstallable: () => !!deferredPrompt,
+    isInstalled: isStandalone,
+    isIOS,
+  };
 })();

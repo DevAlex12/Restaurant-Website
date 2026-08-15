@@ -1,58 +1,54 @@
 /* =========================================================
    PAPILZ FOODS — DESIGN TOKENS
-   Palette pulled from the food itself: charred-pot ink,
-   kraft-paper base, jollof-pepper red, palm-oil gold,
-   ugu-leaf green. Ticket/receipt motif carries the brand
-   through checkout.
+   Palette built on the brand itself: charred-pot ink,
+   kraft-paper base, ugu-leaf green, and clean white — nothing else.
+   Ticket/receipt motif carries the brand through checkout.
    ========================================================= */
 
 :root {
   /* ---- Color ----
-     Brand: Papilz green + white (from logo, #0d2c26).
-     Green carries trust/fresh/"go" — it's the identity.
-     Gold is the appetite trigger (warmth, palm oil, sunshine) used on
-     the actions we want tapped — food-industry colour psychology says
-     warm accents on a cool/green base convert better than either alone.
+     Brand: Papilz green + white (from logo, #0d2c26). Green carries
+     trust/fresh/"go" and doubles as the action colour — every tappable
+     element (buttons, highlights, focus states) uses the brand green,
+     never a warm/gold accent.
      A pinch of pepper-red marks "hot/spicy" and urgency, never structure. */
-  --ink: #12271f; /* deep green-black text, ties copy to brand */
-  --ink-soft: #52685d; /* secondary text, green-grey */
-  --base: #fbf7ee; /* warm white — appetizing, not clinical */
-  --base-dim: #f1ecdd; /* deeper band for section contrast */
-  --surface: #ffffff; /* card surface */
-  --line: #e2e3d6; /* hairline border */
+  --ink: #12271f;           /* deep green-black text, ties copy to brand */
+  --ink-soft: #52685d;      /* secondary text, green-grey */
+  --base: #fbf7ee;          /* warm white — appetizing, not clinical */
+  --base-dim: #f1ecdd;      /* deeper band for section contrast */
+  --surface: #ffffff;       /* card surface */
+  --line: #e2e3d6;          /* hairline border */
   --line-strong: #cfd6c4;
 
-  --brand-green-deep: #0d2c26; /* logo background — nav, footer, hero */
-  --brand-green: #15382e; /* secondary deep green surface */
+  --brand-green-deep: #0d2c26;  /* logo background — nav, footer, hero */
+  --brand-green: #15382e;       /* secondary deep green surface */
 
-  /* Action colour: warm gold reads as "tap me" against the green/white
-     brand shell — the same reason fast-food menus flag hot items in
-     amber, not in the brand's own cool colour. */
-  --primary: #12271f;
-  --primary-dark: #12271f;
-  --primary-tint: #fdefd4;
+  /* Action colour: brand green reads as "tap me" everywhere — buttons,
+     focus rings, links — keeping the whole shell to green + white. */
+  --primary: #147a4e;
+  --primary-dark: #0f5f3c;
+  --primary-tint: #e2f3e8;
 
-  --gold: #12271f;
-  --gold-dark: #12271f;
-  --gold-tint: #fdefd4;
+  /* Lighter green for accents that sit ON TOP of the deep green shell
+     (eyebrows, badges over hero/footer) where the main green wouldn't
+     have enough contrast against the dark background. Still green. */
+  --accent-light: #8fdcb2;
 
-  --green: #147a4e; /* brand green for "done/success", links, tags */
+  --green: #147a4e;        /* brand green for "done/success", links, tags */
   --green-tint: #e2f3e8;
 
-  --danger: #d1402a; /* pepper red — remove/alert/"spicy" only */
+  --danger: #d1402a;       /* pepper red — remove/alert/"spicy" only */
 
   /* ---- Type ---- */
   --font-display: "Fraunces", "Georgia", serif;
-  --font-body:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 
   /* ---- Shape / elevation ---- */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
-  --shadow-card:
-    0 1px 2px rgba(36, 26, 18, 0.06), 0 8px 20px -10px rgba(36, 26, 18, 0.18);
+  --shadow-card: 0 1px 2px rgba(36, 26, 18, 0.06), 0 8px 20px -10px rgba(36, 26, 18, 0.18);
   --shadow-pop: 0 10px 30px -8px rgba(36, 26, 18, 0.35);
 
   /* ---- Motion ---- */
@@ -117,9 +113,7 @@ input:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -169,9 +163,7 @@ input:focus-visible {
   box-shadow: var(--shadow-pop);
   opacity: 0;
   pointer-events: none;
-  transition:
-    opacity var(--dur-base) var(--ease),
-    transform var(--dur-base) var(--ease);
+  transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
   z-index: 500;
   display: flex;
   align-items: center;
@@ -187,7 +179,7 @@ input:focus-visible {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--accent-light);
   flex-shrink: 0;
 }
 
@@ -195,15 +187,11 @@ input:focus-visible {
    without tipping into "premium minimal" — a nod, not a costume. ---- */
 .brand-pattern {
   background-image:
-    linear-gradient(135deg, rgba(240, 164, 30, 0.1) 25%, transparent 25%),
-    linear-gradient(225deg, rgba(240, 164, 30, 0.1) 25%, transparent 25%),
-    linear-gradient(45deg, rgba(240, 164, 30, 0.1) 25%, transparent 25%),
-    linear-gradient(315deg, rgba(240, 164, 30, 0.1) 25%, transparent 25%);
-  background-position:
-    20px 0,
-    20px 0,
-    0 0,
-    0 0;
+    linear-gradient(135deg, rgba(20,122,78,0.10) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(20,122,78,0.10) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(20,122,78,0.10) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(20,122,78,0.10) 25%, transparent 25%);
+  background-position: 20px 0, 20px 0, 0 0, 0 0;
   background-size: 40px 40px;
   background-repeat: repeat;
 }
@@ -222,11 +210,7 @@ input:focus-visible {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: linear-gradient(
-    160deg,
-    rgba(13, 44, 38, 0.82),
-    rgba(13, 44, 38, 0.68)
-  );
+  background: linear-gradient(160deg, rgba(13,44,38,0.82), rgba(13,44,38,0.68));
   color: #fff;
   transform: translateY(120%);
   transition: transform var(--dur-slow) var(--ease);
@@ -258,7 +242,7 @@ input:focus-visible {
 
 .install-copy span {
   font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255,255,255,0.75);
 }
 
 .install-actions {
@@ -269,8 +253,8 @@ input:focus-visible {
 }
 
 .install-btn {
-  background: var(--gold);
-  color: #241a05;
+  background: var(--primary);
+  color: #fff;
   border: none;
   font-weight: 700;
   font-size: 13px;
@@ -279,7 +263,7 @@ input:focus-visible {
 }
 
 .install-dismiss {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255,255,255,0.14);
   border: none;
   color: #fff;
   width: 30px;
@@ -304,14 +288,8 @@ input:focus-visible {
   z-index: 450;
   opacity: 0;
   pointer-events: none;
-  transition:
-    opacity var(--dur-base) var(--ease),
-    transform var(--dur-base) var(--ease);
-  background: linear-gradient(
-    160deg,
-    rgba(13, 44, 38, 0.9),
-    rgba(13, 44, 38, 0.76)
-  );
+  transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+  background: linear-gradient(160deg, rgba(13,44,38,0.9), rgba(13,44,38,0.76));
   color: #fff;
 }
 
@@ -332,21 +310,15 @@ input:focus-visible {
 }
 
 .papilz-engagement-toast .et-text b {
-  color: var(--gold);
+  color: var(--accent-light);
 }
 
 /* ---- Glassmorphism panel ---- */
 .glass-panel {
   position: relative;
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.14),
-    rgba(255, 255, 255, 0.04)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+  border: 1px solid rgba(255,255,255,0.28);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
-  box-shadow:
-    0 8px 32px -12px rgba(9, 25, 20, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px -12px rgba(9,25,20,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
 }
