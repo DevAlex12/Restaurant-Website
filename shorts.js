@@ -11,26 +11,23 @@
 const SHORTS = [
   {
     video: "videos/short-1.mp4",
-    poster: "images/jollof-rice-with-chicken.webp",
-    caption: "This is the only thing that can kidnap me",
+    caption: "How to Kidnap me😂😂😂.",
     cta: "menu",
   },
   {
     video: "videos/short-2.mp4",
-    poster: "images/small-chop.webp",
-    caption: "Spagetti and fish sauce",
+    caption: "Spaghetti with Fish Sauce.",
     cta: "install",
   },
   {
     video: "videos/short-3.mp4",
-    poster: "images/stir-fry-spaghetti.webp",
-    caption: "Jollofff",
+    caption: "jolloffffff.",
     cta: "menu",
   },
   {
     video: "videos/short-4.mp4",
     poster: "images/chiken-fries.webp",
-    caption: "Spaggggg",
+    caption: "Spaggggggggg.",
     cta: "install",
   },
 ];
@@ -142,6 +139,7 @@ const SHORTS = [
           video.play().catch(() => {});
         } else {
           video.pause();
+          video.currentTime = 0;
         }
       });
     },
