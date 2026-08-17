@@ -101,7 +101,7 @@ const SHORTS = [
       installBtn.remove();
       if (short.cta === "install" && alreadyInstalled) {
         const arrowSvg = menuBtn.querySelector("svg").outerHTML;
-        menuBtn.innerHTML = "Checkout the menu" + arrowSvg;
+        menuBtn.innerHTML = "Checkout our menu" + arrowSvg;
       }
     }
 
@@ -113,12 +113,40 @@ const SHORTS = [
     syncMuteIcon(muteBtn, userMuted);
     muteButtons.push(muteBtn);
 
+    // Tap the video to play/pause, same as TikTok/Reels. `manualPause`
+    // remembers the person's choice so the scroll observer below
+    // doesn't fight them by auto-resuming a video they paused on purpose.
+    const playstate = node.querySelector(".short-playstate");
+    video.dataset.manualPause = "false";
+
+    video.addEventListener("click", () => {
+      if (video.paused) {
+        video.dataset.manualPause = "false";
+        video.play().catch(() => {});
+        flashPlaystate(playstate, "play");
+      } else {
+        video.dataset.manualPause = "true";
+        video.pause();
+        flashPlaystate(playstate, "pause");
+      }
+    });
+
     feed.appendChild(node);
   });
 
   function syncMuteIcon(btn, muted) {
     btn.querySelector(".icon-muted").hidden = !muted;
     btn.querySelector(".icon-sound").hidden = muted;
+  }
+
+  function flashPlaystate(el, state) {
+    if (!el) return;
+    el.querySelector(".icon-play").hidden = state !== "play";
+    el.querySelector(".icon-pause").hidden = state !== "pause";
+    el.classList.remove("flash");
+    // eslint-disable-next-line no-void
+    void el.offsetWidth; // restart the animation
+    el.classList.add("flash");
   }
 
   function showToast(message) {
@@ -139,10 +167,13 @@ const SHORTS = [
         if (!video) return;
         if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
           video.muted = userMuted;
-          video.play().catch(() => {});
+          if (video.dataset.manualPause !== "true") {
+            video.play().catch(() => {});
+          }
         } else {
           video.pause();
           video.currentTime = 0;
+          video.dataset.manualPause = "false";
         }
       });
     },

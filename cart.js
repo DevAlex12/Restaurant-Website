@@ -96,7 +96,7 @@ function renderCart() {
             <span class="leader"></span>
             <span class="cart-line-price">${naira(lineTotal(item))}</span>
           </div>
-          <div class="cart-line-qty">${naira(item.unitBase)} base${item.addons?.length ? " + add-ons" : ""}</div>
+          <div class="cart-line-qty">${item.unitBase > 0 ? `${naira(item.unitBase)} base${item.addons?.length ? " + add-ons" : ""}` : "Custom-built plate"}</div>
           ${item.addons?.length ? `<div class="cart-line-addons">${addonsHtml}</div>` : ""}
           <div class="line-actions">
             <div class="line-step">

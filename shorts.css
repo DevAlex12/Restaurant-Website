@@ -109,11 +109,45 @@ body.shorts-page {
   pointer-events: none;
 }
 
+/* ---- Center play/pause flash (shown briefly on tap) ---- */
+.short-playstate {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.short-playstate .icon-play,
+.short-playstate .icon-pause {
+  width: 64px;
+  height: 64px;
+  padding: 17px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.38);
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+.short-playstate.flash .icon-play:not([hidden]),
+.short-playstate.flash .icon-pause:not([hidden]) {
+  animation: shortPlaystateFlash 0.55s ease;
+}
+
+@keyframes shortPlaystateFlash {
+  0% { opacity: 0; transform: scale(0.8); }
+  25% { opacity: 1; transform: scale(1); }
+  75% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
 .short-mute {
   position: absolute;
-  top: calc(14px + env(safe-area-inset-top));
+  top: calc(70px + env(safe-area-inset-top));
   right: 16px;
-  z-index: 3;
+  z-index: 40;
   width: 38px;
   height: 38px;
   border-radius: 50%;

@@ -25,6 +25,7 @@ const builderMinus = document.getElementById("builderMinus");
 const builderPlus = document.getElementById("builderPlus");
 const builderTotalEl = document.getElementById("builderTotal");
 const builderAddBtn = document.getElementById("builderAdd");
+const builderStartNew = document.getElementById("builderStartNew");
 
 // ----- CATEGORIES -----
 const categories = [
@@ -83,6 +84,80 @@ const ADDON_GROUP_LABELS = {
 };
 
 const DEFAULT_ADDON_GROUPS = ["scoops", "protein", "sides", "drinks"];
+
+// ----- BUILD YOUR OWN PLATE -----
+// A blank plate with no fixed price — the customer picks whatever
+// scoops/protein/sides/drinks they want (e.g. one scoop of jollof +
+// one scoop of fried rice) and it all goes into the cart as a single
+// combined order line, same as walking up and pointing at a plate.
+const buildYourOwnPlate = {
+  id: "build-your-own",
+  image: "images/jollnd-fried-and-egg.webp",
+  title: "Build Your Own Plate",
+  price: 0,
+  category: "combos",
+  type: "build",
+  addonGroups: DEFAULT_ADDON_GROUPS,
+};
+
+// Build Your Own Plate reuses the same add-on catalog as the meal
+// customizer, but the wording there ("Extra Jollof Rice Scoop") only
+// makes sense when it's stacked on top of a paid base meal. On a
+// blank plate it should just read as what it is: a scoop of jollof.
+const BUILD_SCOOP_LABELS = {
+  "Extra Jollof Rice Scoop": "A Scoop of Jollof Rice",
+  "Extra Fried Rice Scoop": "A Scoop of Fried Rice",
+  "Extra Spaghetti Scoop": "A Scoop of Stir Fry Spaghetti",
+};
+
+const BUILD_GROUP_LABELS = {
+  scoops: "Scoops",
+  protein: "Protein",
+  sides: "Sides",
+  drinks: "Drinks",
+};
+
+function addonDisplayName(groupKey, opt, meal) {
+  if (meal.type === "build" && groupKey === "scoops" && BUILD_SCOOP_LABELS[opt.name]) {
+    return BUILD_SCOOP_LABELS[opt.name];
+  }
+  return opt.name;
+}
+
+function addonGroupLabel(groupKey, meal) {
+  return meal.type === "build" ? BUILD_GROUP_LABELS[groupKey] : ADDON_GROUP_LABELS[groupKey];
+}
+
+// ----- PLATE DRAFT (lets a build-your-own plate carry over between
+// categories, e.g. add a scoop of jollof on the Rice tab, then add
+// chicken on the Protein tab, without losing what was already picked) -----
+const PLATE_DRAFT_KEY = "papilz_plate_draft";
+
+function getPlateDraft() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PLATE_DRAFT_KEY));
+    return raw && raw.addons ? raw : null;
+  } catch {
+    return null;
+  }
+}
+
+function savePlateDraft(addons, qty) {
+  if (!addons || Object.keys(addons).length === 0) {
+    localStorage.removeItem(PLATE_DRAFT_KEY);
+    return;
+  }
+  localStorage.setItem(PLATE_DRAFT_KEY, JSON.stringify({ addons, qty }));
+}
+
+function clearPlateDraft() {
+  localStorage.removeItem(PLATE_DRAFT_KEY);
+}
+
+function plateDraftCount(draft) {
+  if (!draft) return 0;
+  return Object.values(draft.addons || {}).reduce((sum, a) => sum + a.qty, 0);
+}
 
 // ----- MEALS (combo plates — open the order builder) -----
 const meals = [
@@ -184,6 +259,11 @@ function addToCart(entry) {
   showToast(`Added ${entry.title} to cart`);
 }
 
+function buildButtonLabel() {
+  const count = plateDraftCount(getPlateDraft());
+  return count > 0 ? `Continue my plate · ${count} item${count > 1 ? "s" : ""}` : "Build my plate";
+}
+
 // ----- RENDER MENU GRID -----
 function cardTemplate(item) {
   const media = `
@@ -197,11 +277,14 @@ function cardTemplate(item) {
         onload="this.previousElementSibling.remove()"
       />
       ${item.type === "meal" ? '<span class="combo-badge">Customizable</span>' : ""}
+      ${item.type === "build" ? '<span class="combo-badge combo-badge-build">Build your own</span>' : ""}
     </div>`;
 
   const actions =
     item.type === "meal"
       ? `<button class="customize-btn" data-id="${item.id}">Customize · ${naira(item.price)}</button>`
+      : item.type === "build"
+      ? `<button class="customize-btn" data-id="${item.id}">${buildButtonLabel()}</button>`
       : `
         <div class="qtybtn">
           <button class="stepbtn minus" aria-label="Decrease quantity">−</button>
@@ -233,7 +316,7 @@ function attachCardEvents(data) {
     const item = data.find((d) => d.id === id);
     if (!item) return;
 
-    if (item.type === "meal") {
+    if (item.type === "meal" || item.type === "build") {
       card.querySelector(".customize-btn").addEventListener("click", () => openBuilder(item));
       return;
     }
@@ -276,9 +359,18 @@ function applyFilters() {
   const term = searchInput.value.trim().toLowerCase();
 
   let filtered = category === "all" ? menuData : menuData.filter((it) => it.category === category);
+
   if (term) {
     filtered = filtered.filter((it) => it.title.toLowerCase().includes(term));
+    if (buildYourOwnPlate.title.toLowerCase().includes(term)) {
+      filtered = [buildYourOwnPlate, ...filtered];
+    }
+  } else {
+    // Pinned on every tab — Rice, Protein, wherever — not just Meals,
+    // since building a plate usually means picking across categories.
+    filtered = [buildYourOwnPlate, ...filtered];
   }
+
   renderMenu(filtered);
 }
 
@@ -303,37 +395,54 @@ searchInput.addEventListener("input", () => {
 let builderState = null; // { meal, qty, addons: { groupKey: { name: qty } } }
 
 function openBuilder(meal) {
-  builderState = { meal, qty: 1, addons: {} };
+  let initialAddons = {};
+  let initialQty = 1;
+
+  if (meal.type === "build") {
+    const draft = getPlateDraft();
+    if (draft) {
+      initialAddons = draft.addons;
+      initialQty = draft.qty || 1;
+    }
+  }
+
+  builderState = { meal, qty: initialQty, addons: initialAddons };
 
   builderImg.src = meal.image;
   builderImg.alt = meal.title;
   builderTitle.textContent = meal.title;
-  builderBasePrice.textContent = `Base price ${naira(meal.price)}`;
-  builderQtyEl.textContent = "1";
+  builderBasePrice.textContent =
+    meal.type === "build"
+      ? "No base charge — pick your own scoops, protein, sides and drinks"
+      : `Base price ${naira(meal.price)}`;
+  builderQtyEl.textContent = String(initialQty);
+  builderStartNew.hidden = meal.type !== "build";
 
   addonGroupsEl.innerHTML = meal.addonGroups
     .map((groupKey) => {
       const items = ADDON_CATALOG[groupKey];
       const rows = items
-        .map(
-          (opt, i) => `
+        .map((opt, i) => {
+          const displayName = addonDisplayName(groupKey, opt, meal);
+          const startQty = builderState.addons[opt.name]?.qty || 0;
+          return `
           <div class="addon-row" data-group="${groupKey}" data-index="${i}">
             <div class="addon-info">
-              <span class="addon-name">${opt.name}</span>
+              <span class="addon-name">${displayName}</span>
               <span class="addon-price">+${naira(opt.price)} each</span>
             </div>
             <div class="addon-stepper">
-              <button class="stepbtn addon-minus" aria-label="Remove one ${opt.name}">−</button>
-              <span class="quantity">0</span>
-              <button class="stepbtn addon-plus" aria-label="Add one ${opt.name}">+</button>
+              <button class="stepbtn addon-minus" aria-label="Remove one ${displayName}">−</button>
+              <span class="quantity">${startQty}</span>
+              <button class="stepbtn addon-plus" aria-label="Add one ${displayName}">+</button>
             </div>
-          </div>`
-        )
+          </div>`;
+        })
         .join("");
 
       return `
         <div class="addon-group">
-          <h3>${ADDON_GROUP_LABELS[groupKey]}</h3>
+          <h3>${addonGroupLabel(groupKey, meal)}</h3>
           ${rows}
         </div>`;
     })
@@ -343,6 +452,7 @@ function openBuilder(meal) {
     const groupKey = row.dataset.group;
     const idx = Number(row.dataset.index);
     const opt = ADDON_CATALOG[groupKey][idx];
+    const displayName = addonDisplayName(groupKey, opt, meal);
     const qtyEl = row.querySelector(".quantity");
     const minus = row.querySelector(".addon-minus");
     const plus = row.querySelector(".addon-plus");
@@ -350,12 +460,12 @@ function openBuilder(meal) {
     minus.addEventListener("click", () => {
       const current = builderState.addons[opt.name]?.qty || 0;
       if (current <= 0) return;
-      setAddonQty(opt, current - 1, qtyEl);
+      setAddonQty(opt, current - 1, qtyEl, displayName);
     });
 
     plus.addEventListener("click", () => {
       const current = builderState.addons[opt.name]?.qty || 0;
-      setAddonQty(opt, current + 1, qtyEl);
+      setAddonQty(opt, current + 1, qtyEl, displayName);
     });
   });
 
@@ -365,15 +475,32 @@ function openBuilder(meal) {
   requestAnimationFrame(() => builderSheet.classList.add("show"));
 }
 
-function setAddonQty(opt, qty, qtyEl) {
+function setAddonQty(opt, qty, qtyEl, displayName) {
   if (qty <= 0) {
     delete builderState.addons[opt.name];
     qtyEl.textContent = "0";
   } else {
-    builderState.addons[opt.name] = { price: opt.price, qty };
+    builderState.addons[opt.name] = { price: opt.price, qty, label: displayName };
     qtyEl.textContent = qty;
   }
   updateBuilderTotal();
+  saveDraftIfBuild();
+}
+
+function saveDraftIfBuild() {
+  if (!builderState || builderState.meal.type !== "build") return;
+  savePlateDraft(builderState.addons, builderState.qty);
+}
+
+function resetBuilderAddons() {
+  if (!builderState) return;
+  builderState.addons = {};
+  builderState.qty = 1;
+  builderQtyEl.textContent = "1";
+  addonGroupsEl.querySelectorAll(".addon-row .quantity").forEach((el) => (el.textContent = "0"));
+  updateBuilderTotal();
+  clearPlateDraft();
+  showToast("Started a fresh plate");
 }
 
 function updateBuilderTotal() {
@@ -390,6 +517,7 @@ builderMinus.addEventListener("click", () => {
     builderState.qty--;
     builderQtyEl.textContent = builderState.qty;
     updateBuilderTotal();
+    saveDraftIfBuild();
   }
 });
 
@@ -397,15 +525,23 @@ builderPlus.addEventListener("click", () => {
   builderState.qty++;
   builderQtyEl.textContent = builderState.qty;
   updateBuilderTotal();
+  saveDraftIfBuild();
 });
+
+builderStartNew.addEventListener("click", resetBuilderAddons);
 
 builderAddBtn.addEventListener("click", () => {
   const { meal, qty, addons } = builderState;
   const addonList = Object.entries(addons).map(([name, v]) => ({
-    name,
+    name: v.label || name,
     price: v.price,
     qty: v.qty,
   }));
+
+  if (meal.type === "build" && addonList.length === 0) {
+    showToast("Pick at least one scoop, protein, side or drink first");
+    return;
+  }
 
   addToCart({
     title: meal.title,
@@ -415,13 +551,17 @@ builderAddBtn.addEventListener("click", () => {
     addons: addonList,
   });
 
+  if (meal.type === "build") clearPlateDraft();
+
   closeBuilder();
 });
 
 function closeBuilder() {
+  const wasBuild = builderState && builderState.meal.type === "build";
   builderSheet.classList.remove("show");
   sheetBackdrop.classList.remove("show");
   document.body.classList.remove("sheet-open");
+  if (wasBuild) applyFilters();
 }
 
 sheetClose.addEventListener("click", closeBuilder);
@@ -431,5 +571,5 @@ document.addEventListener("keydown", (e) => {
 });
 
 // ----- INITIAL LOAD -----
-renderMenu(menuData);
+applyFilters();
 updateCartCount();
