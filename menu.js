@@ -237,15 +237,19 @@ function bumpCartIcon() {
   cartPill.classList.add("bump");
 }
 
+function computeSignature(title, addons) {
+  return JSON.stringify({
+    title,
+    addons: (addons || []).map((a) => `${a.name}:${a.qty}`).sort(),
+  });
+}
+
 // Adds a line to the cart. Simple items merge by title; meal bundles merge
 // only when title AND chosen add-ons match exactly, since two differently
 // customized versions of the same meal are meaningfully different orders.
 function addToCart(entry) {
   const cart = getCart();
-  const signature = JSON.stringify({
-    title: entry.title,
-    addons: (entry.addons || []).map((a) => `${a.name}:${a.qty}`).sort(),
-  });
+  const signature = computeSignature(entry.title, entry.addons);
 
   const existing = cart.find((it) => it._sig === signature);
   if (existing) {
@@ -257,6 +261,33 @@ function addToCart(entry) {
   setCart(cart);
   bumpCartIcon();
   showToast(`Added ${entry.title} to cart`);
+}
+
+// Finds the single cart line that matches this meal, so reopening
+// Customize/Build on something already in the cart picks up right where
+// it was left (scoops, protein, etc.) instead of starting blank. Only
+// returns a match when there's exactly one — if the customer already has
+// two differently-built plates of the same meal in their cart, we can't
+// guess which one they mean, so we leave it ambiguous and start fresh.
+function findCartEntryIndex(meal) {
+  const cart = getCart();
+  const matches = [];
+  cart.forEach((it, i) => {
+    if (it.title === meal.title) matches.push(i);
+  });
+  return matches.length === 1 ? matches[0] : -1;
+}
+
+// Reverses addonDisplayName() so a saved cart line's add-on display names
+// (e.g. "A Scoop of Jollof Rice") can be matched back to their catalog
+// entry (e.g. "Extra Jollof Rice Scoop") when prefilling the builder.
+function findCatalogOptByDisplayName(meal, displayName) {
+  for (const groupKey of meal.addonGroups) {
+    for (const opt of ADDON_CATALOG[groupKey]) {
+      if (addonDisplayName(groupKey, opt, meal) === displayName) return opt;
+    }
+  }
+  return null;
 }
 
 function buildButtonLabel() {
@@ -397,16 +428,33 @@ let builderState = null; // { meal, qty, addons: { groupKey: { name: qty } } }
 function openBuilder(meal) {
   let initialAddons = {};
   let initialQty = 1;
+  let editIndex = -1;
 
   if (meal.type === "build") {
     const draft = getPlateDraft();
     if (draft) {
+      // An unfinished plate takes priority — it hasn't been added yet.
       initialAddons = draft.addons;
       initialQty = draft.qty || 1;
+    } else {
+      editIndex = findCartEntryIndex(meal);
     }
+  } else {
+    editIndex = findCartEntryIndex(meal);
   }
 
-  builderState = { meal, qty: initialQty, addons: initialAddons };
+  if (editIndex !== -1) {
+    const existing = getCart()[editIndex];
+    initialQty = existing.qty;
+    initialAddons = {};
+    (existing.addons || []).forEach((a) => {
+      const opt = findCatalogOptByDisplayName(meal, a.name);
+      const key = opt ? opt.name : a.name;
+      initialAddons[key] = { price: a.price, qty: a.qty, label: a.name };
+    });
+  }
+
+  builderState = { meal, qty: initialQty, addons: initialAddons, editIndex };
 
   builderImg.src = meal.image;
   builderImg.alt = meal.title;
@@ -496,6 +544,7 @@ function resetBuilderAddons() {
   if (!builderState) return;
   builderState.addons = {};
   builderState.qty = 1;
+  builderState.editIndex = -1;
   builderQtyEl.textContent = "1";
   addonGroupsEl.querySelectorAll(".addon-row .quantity").forEach((el) => (el.textContent = "0"));
   updateBuilderTotal();
@@ -510,6 +559,9 @@ function updateBuilderTotal() {
   );
   const unit = builderState.meal.price + addonsTotal;
   builderTotalEl.textContent = naira(unit * builderState.qty);
+
+  const label = builderState.editIndex !== -1 ? "Update cart" : "Add to cart";
+  builderAddBtn.childNodes[0].textContent = `${label} · `;
 }
 
 builderMinus.addEventListener("click", () => {
@@ -531,7 +583,7 @@ builderPlus.addEventListener("click", () => {
 builderStartNew.addEventListener("click", resetBuilderAddons);
 
 builderAddBtn.addEventListener("click", () => {
-  const { meal, qty, addons } = builderState;
+  const { meal, qty, addons, editIndex } = builderState;
   const addonList = Object.entries(addons).map(([name, v]) => ({
     name: v.label || name,
     price: v.price,
@@ -543,13 +595,36 @@ builderAddBtn.addEventListener("click", () => {
     return;
   }
 
-  addToCart({
-    title: meal.title,
-    image: meal.image,
-    unitBase: meal.price,
-    qty,
-    addons: addonList,
-  });
+  if (editIndex !== -1) {
+    // Editing a line that's already in the cart (e.g. just bumped the qty
+    // to double it) — update it in place instead of adding a second,
+    // possibly mismatched line.
+    const cart = getCart();
+    if (cart[editIndex]) {
+      cart[editIndex] = {
+        ...cart[editIndex],
+        title: meal.title,
+        image: meal.image,
+        unitBase: meal.price,
+        qty,
+        addons: addonList,
+        _sig: computeSignature(meal.title, addonList),
+      };
+      setCart(cart);
+      bumpCartIcon();
+      showToast(`Updated ${meal.title} in cart`);
+    } else {
+      addToCart({ title: meal.title, image: meal.image, unitBase: meal.price, qty, addons: addonList });
+    }
+  } else {
+    addToCart({
+      title: meal.title,
+      image: meal.image,
+      unitBase: meal.price,
+      qty,
+      addons: addonList,
+    });
+  }
 
   if (meal.type === "build") clearPlateDraft();
 
