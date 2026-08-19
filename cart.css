@@ -208,6 +208,13 @@ body {
   font-size: 12px;
 }
 
+.cart-line-multiplier {
+  margin-top: 6px;
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
 .line-actions {
   display: flex;
   align-items: center;

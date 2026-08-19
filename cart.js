@@ -78,16 +78,22 @@ function renderCart() {
 
   cartItemsEl.innerHTML = cart
     .map((item, i) => {
+      // Add-on lines always describe ONE plate as configured — the ×N plate
+      // count is applied once, at the whole-plate level (the qty stepper and
+      // the line total below), never re-applied per ingredient. That keeps
+      // "2 plates, each with 2 scoops" from ever reading as "4 scoops".
       const addonsHtml = (item.addons || [])
         .map(
           (a) => `
           <div class="addon-line">
             <span>+ ${a.name} x${a.qty}</span>
             <span class="leader"></span>
-            <span class="addon-line-price">${naira(a.price * a.qty * item.qty)}</span>
+            <span class="addon-line-price">${naira(a.price * a.qty)}</span>
           </div>`
         )
         .join("");
+
+      const plateNote = item.qty > 1 ? ` · ×${item.qty} plates` : "";
 
       return `
         <div class="cart-line" data-index="${i}">
@@ -96,8 +102,9 @@ function renderCart() {
             <span class="leader"></span>
             <span class="cart-line-price">${naira(lineTotal(item))}</span>
           </div>
-          <div class="cart-line-qty">${item.unitBase > 0 ? `${naira(item.unitBase)} base${item.addons?.length ? " + add-ons" : ""}` : "Custom-built plate"}</div>
+          <div class="cart-line-qty">${item.unitBase > 0 ? `${naira(item.unitBase)} base${item.addons?.length ? " + add-ons" : ""}` : "Custom-built plate"}${plateNote}</div>
           ${item.addons?.length ? `<div class="cart-line-addons">${addonsHtml}</div>` : ""}
+          ${item.qty > 1 ? `<div class="cart-line-multiplier">Each plate above × ${item.qty} = ${naira(lineTotal(item))} total</div>` : ""}
           <div class="line-actions">
             <div class="line-step">
               <button class="stepbtn line-minus" aria-label="Decrease quantity">−</button>
