@@ -4,6 +4,12 @@
 
 const WHATSAPP_NUMBER = "2348138076639";
 
+// Every plate/meal is packed to go, so a small packaging fee is added
+// automatically per plate (not per scoop/add-on). Kept as one constant
+// so menu.js and cart.js agree even though they're loaded on different
+// pages and don't share scope.
+const TAKEAWAY_FEE_PER_PLATE = 200;
+
 const naira = (n) => `₦${n.toLocaleString("en-NG")}`;
 
 // ----- SELECTORS -----
@@ -21,6 +27,9 @@ const ticketEl = document.getElementById("ticket");
 const emptyCartEl = document.getElementById("emptyCart");
 const clearCartBtn = document.getElementById("clearCartBtn");
 const ticketDateEl = document.getElementById("ticketDate");
+const subtotalAmountEl = document.getElementById("subtotalAmount");
+const takeawayFeeLabelEl = document.getElementById("takeawayFeeLabel");
+const takeawayFeeAmountEl = document.getElementById("takeawayFeeAmount");
 
 const custNameEl = document.getElementById("custName");
 const custPhoneEl = document.getElementById("custPhone");
@@ -50,8 +59,20 @@ function lineTotal(item) {
   return (item.unitBase + addonsTotal) * item.qty;
 }
 
-function cartTotal() {
+function plateCount() {
+  return cart.reduce((sum, it) => sum + it.qty, 0);
+}
+
+function itemsSubtotal() {
   return cart.reduce((sum, it) => sum + lineTotal(it), 0);
+}
+
+function takeawayFeeTotal() {
+  return plateCount() * TAKEAWAY_FEE_PER_PLATE;
+}
+
+function cartTotal() {
+  return itemsSubtotal() + takeawayFeeTotal();
 }
 
 function formattedDate() {
@@ -70,6 +91,8 @@ function renderCart() {
 
   if (isEmpty) {
     totalAmountEl.textContent = "₦0";
+    subtotalAmountEl.textContent = "₦0";
+    takeawayFeeAmountEl.textContent = "₦0";
     updateBottomBar();
     return;
   }
@@ -118,6 +141,10 @@ function renderCart() {
     .join("");
 
   totalAmountEl.textContent = naira(cartTotal());
+  subtotalAmountEl.textContent = naira(itemsSubtotal());
+  const plates = plateCount();
+  takeawayFeeLabelEl.textContent = `Takeaway packaging (₦${TAKEAWAY_FEE_PER_PLATE} × ${plates} plate${plates === 1 ? "" : "s"})`;
+  takeawayFeeAmountEl.textContent = naira(takeawayFeeTotal());
   attachLineEvents();
   updateBottomBar();
 }
@@ -205,6 +232,8 @@ function renderConfirm() {
     rows.push({ k: "Address", v: deliveryLocationEl.value.trim() });
   }
   rows.push({ k: "Items", v: `${cart.reduce((s, i) => s + i.qty, 0)}` });
+  rows.push({ k: "Subtotal", v: naira(itemsSubtotal()) });
+  rows.push({ k: `Takeaway (${plateCount()} plate${plateCount() === 1 ? "" : "s"})`, v: naira(takeawayFeeTotal()) });
 
   confirmRowsEl.innerHTML = rows
     .map((r) => `<div class="confirm-row"><span class="k">${r.k}</span><span class="v">${r.v}</span></div>`)
@@ -223,7 +252,9 @@ function buildWhatsAppMessage() {
     });
   });
 
-  message += `\n*Total:* ${naira(cartTotal())}\n`;
+  message += `\n*Subtotal:* ${naira(itemsSubtotal())}\n`;
+  message += `*Takeaway packaging (${plateCount()} plate${plateCount() === 1 ? "" : "s"}):* ${naira(takeawayFeeTotal())}\n`;
+  message += `*Total:* ${naira(cartTotal())}\n`;
   message += `*Name:* ${custNameEl.value.trim()}\n`;
   message += `*Phone:* ${custPhoneEl.value.trim()}\n`;
   message += `*Method:* ${selectedMethod === "delivery" ? "Delivery" : "Pickup"}\n`;

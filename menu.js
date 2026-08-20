@@ -49,16 +49,18 @@ filterBar.innerHTML = categories
 // ----- ADD-ON CATALOG (used inside the order builder) -----
 const ADDON_CATALOG = {
   scoops: [
-    { name: "Extra Jollof Rice Scoop", price: 700 },
-    { name: "Extra Fried Rice Scoop", price: 700 },
-    { name: "Extra Spaghetti Scoop", price: 700 },
+    { name: "Extra Jollof Rice Scoop", price: 600 },
+    { name: "Extra Fried Rice Scoop", price: 600 },
+    { name: "Extra Spaghetti Scoop", price: 600 },
   ],
   protein: [
     { name: "Beef", price: 1000 },
     { name: "Fish", price: 1500 },
-    { name: "Chicken Wings", price: 3000 },
-    { name: "Chicken Lap", price: 3000 },
-    { name: "Turkey Drumstick", price: 4500 },
+    { name: "Egg", price: 400 },
+    { name: "Ponmo", price: 500 },
+    { name: "Small Chicken", price: 1500 },
+    { name: "Big Chicken", price: 3000 },
+    { name: "Turkey", price: 5000 },
   ],
   sides: [
     { name: "Fried Plantain", price: 500 },
@@ -84,6 +86,12 @@ const ADDON_GROUP_LABELS = {
 };
 
 const DEFAULT_ADDON_GROUPS = ["scoops", "protein", "sides", "drinks"];
+
+// ----- TAKEAWAY PACKAGING FEE -----
+// Every plate/meal is packed to go, so a small packaging fee is added
+// automatically per plate — not per scoop or per add-on. Kept as one
+// shared constant so the menu page, builder, and cart all agree.
+const TAKEAWAY_FEE_PER_PLATE = 200;
 
 // ----- BUILD YOUR OWN PLATE -----
 // A blank plate with no fixed price — the customer picks whatever
@@ -177,14 +185,16 @@ const meals = [
 
 // ----- SIMPLE ITEMS (a la carte — quick add, no builder) -----
 const simpleItems = [
-  { id: "s21", image: "images/fried-rice.webp", title: "A Scoop of Fried Rice", price: 700, category: "rice" },
-  { id: "s22", image: "images/jollof-rice.webp", title: "A Scoop of Jollof Rice", price: 700, category: "rice" },
-  { id: "s94", image: "images/stir-fry-spaghetti.webp", title: "A Scoop of Stir Fry Spaghetti", price: 700, category: "spaghetti" },
+  { id: "s21", image: "images/fried-rice.webp", title: "A Scoop of Fried Rice", price: 600, category: "rice" },
+  { id: "s22", image: "images/jollof-rice.webp", title: "A Scoop of Jollof Rice", price: 600, category: "rice" },
+  { id: "s94", image: "images/stir-fry-spaghetti.webp", title: "A Scoop of Stir Fry Spaghetti", price: 600, category: "spaghetti" },
   { id: "s41", image: "images/cow-meat.webp", title: "Beef", price: 1000, category: "protein" },
   { id: "s42", image: "images/fish.webp", title: "Fish", price: 1500, category: "protein" },
-  { id: "s43", image: "images/chick-wing.webp", title: "Chicken Wings", price: 3000, category: "protein" },
-  { id: "s44", image: "images/chick-lap.webp", title: "Chicken Lap", price: 3000, category: "protein" },
-  { id: "s45", image: "images/tur-drum-stick.webp", title: "Turkey Drumstick", price: 4500, category: "protein" },
+  { id: "s46", image: "images/egg.webp", title: "Egg", price: 400, category: "protein" },
+  { id: "s47", image: "images/ponmo.webp", title: "Ponmo", price: 500, category: "protein" },
+  { id: "s43", image: "images/chick-lap.webp", title: "Small Chicken", price: 1500, category: "protein" },
+  { id: "s44", image: "images/chick-wing.webp", title: "Big Chicken", price: 3000, category: "protein" },
+  { id: "s45", image: "images/tur-drum-stick.webp", title: "Turkey", price: 5000, category: "protein" },
   { id: "s33", image: "images/e-soup.webp", title: "Efo Riro", price: 5500, category: "soup" },
   { id: "s83", image: "images/dodo1.webp", title: "Fried Plantain", price: 500, category: "sides" },
   { id: "s61", image: "images/salad.webp", title: "Vegetable Salad / Coleslaw", price: 700, category: "sides" },

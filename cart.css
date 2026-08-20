@@ -130,6 +130,20 @@ body {
   margin: 12px 0;
 }
 
+.ticket-fee-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.ticket-fee-row-muted {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
 .ticket-total-row {
   display: flex;
   justify-content: space-between;
@@ -137,6 +151,9 @@ body {
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: 17px;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
 }
 
 /* ===== CART ITEM LINES ===== */
