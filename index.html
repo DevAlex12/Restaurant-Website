@@ -1,45 +1,119 @@
+```html
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Papilz Foods — Eat good, feel good</title>
+
+    <!-- Primary SEO -->
+    <title>Papilz Foods | Fresh Food for Pickup & Delivery</title>
+
     <meta
       name="description"
-      content="Order jollof, spaghetti, soups, proteins and drinks for pickup or delivery."
+      content="Order fresh jollof, spaghetti, soups, sides, proteins and drinks from Papilz Foods for pickup or delivery."
     />
+
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Papilz Foods" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://papilzfoods.netlify.app/" />
+
+    <!-- Google Search Console -->
     <meta
       name="google-site-verification"
       content="L85ua_B5d1rraAaRNK7tm7sCkr1oqArJfxJxgjkbUj4"
     />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Papilz Foods | Fresh Food for Pickup & Delivery"
+    />
+    <meta
+      property="og:description"
+      content="Order fresh jollof, spaghetti, soups, sides, proteins and drinks from Papilz Foods for pickup or delivery."
+    />
+    <meta property="og:url" content="https://papilzfoods.netlify.app/" />
+    <meta property="og:site_name" content="Papilz Foods" />
+    <meta
+      property="og:image"
+      content="https://papilzfoods.netlify.app/images/jollof-rice-with-chicken.webp"
+    />
+    <meta
+      property="og:image:alt"
+      content="Jollof rice with grilled chicken, freshly plated"
+    />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Papilz Foods | Fresh Food for Pickup & Delivery"
+    />
+    <meta
+      name="twitter:description"
+      content="Order fresh jollof, spaghetti, soups, sides, proteins and drinks from Papilz Foods for pickup or delivery."
+    />
+    <meta
+      name="twitter:image"
+      content="https://papilzfoods.netlify.app/images/jollof-rice-with-chicken.webp"
+    />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Styles -->
     <link rel="stylesheet" href="styles/tokens.css" />
     <link rel="stylesheet" href="index.css" />
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#0d2c26" />
+
     <link rel="icon" href="icons/favicon.ico" sizes="any" />
+
     <link
       rel="icon"
       type="image/png"
       sizes="192x192"
       href="icons/icon-192.png"
     />
+
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+
     <meta name="apple-mobile-web-app-capable" content="yes" />
+
     <meta
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
+
     <meta name="apple-mobile-web-app-title" content="Papilz" />
+
     <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Restaurant Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Papilz Foods",
+        "url": "https://papilzfoods.netlify.app/",
+        "description": "Papilz Foods serves fresh jollof, spaghetti, soups, sides, proteins and drinks for pickup or delivery.",
+        "image": "https://papilzfoods.netlify.app/images/jollof-rice-with-chicken.webp",
+        "servesCuisine": ["Nigerian", "African"]
+      }
+    </script>
   </head>
+
   <body>
     <nav class="site-nav">
       <a href="index.html" class="wordmark"
@@ -49,6 +123,7 @@
           class="wordmark-badge"
         />Papilz<span class="wordmark-accent">.</span></a
       >
+
       <a href="shorts.html" class="shorts-nav-pill">
         <svg
           width="14"
@@ -70,16 +145,22 @@
         alt="Jollof rice with grilled chicken, freshly plated"
         fetchpriority="high"
       />
+
       <div class="hero-scrim"></div>
+
       <div class="hero-content">
         <span class="eyebrow">Papilz Foods</span>
+
         <h1>Eat good,<br />feel good.</h1>
+
         <p>
           Jollof, spaghetti, soups and sides made fresh — build your plate
           exactly how you want it, then order in a couple of taps.
         </p>
+
         <a href="menu.html" class="btn-primary">
           See the menu
+
           <svg
             width="16"
             height="16"
@@ -102,27 +183,35 @@
     <section class="strip" aria-label="Why order from Papilz">
       <div class="strip-item">
         <span class="strip-num">01</span>
+
         <div>
           <h3>Build your plate</h3>
+
           <p>
             Add extra scoops, sides or protein to any meal — no separate carts
             to juggle.
           </p>
         </div>
       </div>
+
       <div class="strip-item">
         <span class="strip-num">02</span>
+
         <div>
           <h3>Pickup or delivery</h3>
+
           <p>
             Tell us where, and your order chit goes straight to the kitchen.
           </p>
         </div>
       </div>
+
       <div class="strip-item">
         <span class="strip-num">03</span>
+
         <div>
           <h3>Confirm on WhatsApp</h3>
+
           <p>One tap sends your full order — no accounts, no forms to lose.</p>
         </div>
       </div>
@@ -131,7 +220,9 @@
     <section class="shorts brand-pattern" aria-label="Papilz Food Shorts">
       <div class="shorts-inner">
         <span class="eyebrow eyebrow-dark">Papilz Foods</span>
+
         <h2 class="shorts-heading">Food Shorts</h2>
+
         <p class="shorts-sub">
           Quick, mouth-watering clips from our kitchen — plating, sizzling, the
           whole vibe.
@@ -148,19 +239,23 @@
               alt=""
               class="shorts-teaser-thumb"
             />
+
             <img
               src="images/small-chop.webp"
               alt=""
               class="shorts-teaser-thumb"
             />
+
             <img
               src="images/stir-fry-spaghetti.webp"
               alt=""
               class="shorts-teaser-thumb"
             />
           </span>
+
           <span class="btn-primary shorts-teaser-btn">
             Watch Food Shorts
+
             <svg
               width="16"
               height="16"
@@ -185,3 +280,4 @@
     <script src="engagement.js"></script>
   </body>
 </html>
+```
